@@ -265,37 +265,43 @@ body { font-family: var(--serif); cursor: default; }
 .porto-link  { font-family: var(--fell); font-size: .8rem; color: var(--red); cursor: pointer; transition: color .2s; background: none; border: none; border-bottom: 1px solid rgba(139,26,26,.3); padding: 0; font-style: italic; text-decoration: none; }
 .porto-link:hover { color: #5a0f0f; }
 
-/* ===== SKILLS (redesigned — no percentages) ===== */
+/* ===== SKILLS (ink bar) ===== */
 .skill-entry { margin-bottom: 1rem; border-bottom: 1px solid rgba(139,105,20,.12); padding-bottom: .8rem; }
-.skill-entry-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: .5rem; }
-.skill-entry-title { font-family: var(--fell); font-size: .9rem; color: var(--ink); font-weight: 600; display: flex; align-items: center; gap: .4rem; }
-.skill-level-badge {
-  font-family: var(--display);
-  font-size: .42rem; letter-spacing: .12em; text-transform: uppercase;
-  padding: .2rem .6rem;
-  display: inline-flex; align-items: center; gap: 0;
-  white-space: nowrap;
+.skill-entry-title { font-family: var(--fell); font-size: .9rem; color: var(--ink); font-weight: 600; display: flex; align-items: center; gap: .4rem; margin-bottom: .45rem; }
+
+.skill-ink-bar-wrap {
+  position: relative; height: 6px;
+  background: rgba(139,105,20,.12);
+  margin-bottom: .5rem; overflow: visible;
 }
+.skill-ink-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red) 0%, var(--gold) 60%, rgba(139,105,20,.5) 100%);
+  position: relative;
+  animation: inkFill 1.4s cubic-bezier(.16,1,.3,1) both;
+}
+.skill-ink-bar::after {
+  content: ''; position: absolute; right: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--red); box-shadow: 0 0 6px rgba(139,26,26,.5);
+}
+.skill-ink-pct {
+  position: absolute; right: -2px; top: -18px;
+  font-family: var(--display); font-size: .4rem;
+  letter-spacing: .08em; color: var(--ink3);
+}
+@keyframes inkFill { from { width: 0 !important; } }
+
 .skill-chips { display: flex; flex-wrap: wrap; gap: .35rem; }
-.skill-chip  {
+.skill-chip {
   font-family: var(--display);
   font-size: .42rem; letter-spacing: .1em; text-transform: uppercase;
   color: var(--ink3);
-  background: rgba(139,105,20,.06);
-  border: 1px solid;
+  background: rgba(139,105,20,.07);
+  border: 1px solid rgba(139,105,20,.2);
   padding: .2rem .55rem;
-  display: inline-flex; align-items: center; gap: .3rem;
 }
-.skill-chip-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-
-.skill-legend {
-  display: flex; align-items: center; flex-wrap: wrap; gap: .6rem;
-  margin-top: .8rem;
-  padding: .6rem .8rem;
-  background: rgba(139,105,20,.04);
-  border: 1px solid rgba(139,105,20,.15);
-}
-.skill-legend-item { display: inline-flex; align-items: center; }
 
 /* ===== SOCIAL ===== */
 .social-entry { display: flex; gap: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(139,105,20,.12); align-items: flex-start; }
@@ -487,9 +493,11 @@ body { font-family: var(--serif); cursor: default; }
 #book-scene.dark-mode .porto-title, #book-scene.dark-mode .social-title, #book-scene.dark-mode .skill-entry-title { color: rgba(244,234,213,.9); }
 #book-scene.dark-mode .porto-pill  { color: rgba(139,105,20,.65); border-color: rgba(139,105,20,.18); }
 #book-scene.dark-mode .porto-link  { color: rgba(180,70,70,.85); }
-#book-scene.dark-mode .skill-chip  { color: rgba(180,155,110,.75); background: rgba(139,105,20,.06); }
-#book-scene.dark-mode .skill-legend { background: rgba(139,105,20,.04); border-color: rgba(139,105,20,.12); }
-#book-scene.dark-mode .skill-chip-dot { opacity: .85; }
+#book-scene.dark-mode .skill-chip { color: rgba(180,155,110,.75); background: rgba(139,105,20,.06); border-color: rgba(139,105,20,.15); }
+#book-scene.dark-mode .skill-ink-bar-wrap { background: rgba(139,105,20,.1); }
+#book-scene.dark-mode .skill-ink-bar { background: linear-gradient(90deg, #6b1a1a 0%, #8b6914 60%, rgba(139,105,20,.4) 100%); }
+#book-scene.dark-mode .skill-ink-bar::after { background: #6b1a1a; }
+#book-scene.dark-mode .skill-ink-pct { color: rgba(139,105,20,.55); }
 #book-scene.dark-mode .social-photo-frame { border-color: rgba(139,105,20,.2); }
 #book-scene.dark-mode .contact-box { background: rgba(139,105,20,.04); border-color: rgba(139,105,20,.18); }
 #book-scene.dark-mode .contact-label { color: rgba(139,105,20,.55); }
