@@ -21,27 +21,7 @@ const SOCIAL_PLACEHOLDER = {
   6: ['https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&h=220&fit=crop'],
 }
 
-const SKILL_LEVELS = {
-  'Expert':      { color: '#8b1a1a', bg: 'rgba(139,26,26,.1)',  border: 'rgba(139,26,26,.3)',  dot: 5 },
-  'Advanced':    { color: '#7a5c0a', bg: 'rgba(139,105,20,.1)', border: 'rgba(139,105,20,.3)', dot: 4 },
-  'Proficient':  { color: '#3d6b3a', bg: 'rgba(61,107,58,.1)',  border: 'rgba(61,107,58,.3)',  dot: 3 },
-  'Intermediate':{ color: '#4a6b8a', bg: 'rgba(74,107,138,.1)', border: 'rgba(74,107,138,.3)', dot: 2 },
-}
 
-function SkillDots({ level }) {
-  const cfg = SKILL_LEVELS[level] || SKILL_LEVELS['Proficient']
-  return (
-    <span style={{ display:'inline-flex', gap:'3px', alignItems:'center', marginLeft:'.35rem' }}>
-      {[1,2,3,4,5].map(i => (
-        <span key={i} style={{
-          width:'6px', height:'6px', borderRadius:'50%',
-          background: i <= cfg.dot ? cfg.color : 'rgba(139,105,20,.15)',
-          display:'inline-block',
-        }}/>
-      ))}
-    </span>
-  )
-}
 
 export default function BookPortfolio() {
   const [current, setCurrent]             = useState('home')
@@ -314,10 +294,10 @@ export default function BookPortfolio() {
                 <div className="home-spread">
                   <div>
                     <p className="book-p dropcap">
-                      <strong>Muhamad Irpan Yasin</strong> is a versatile and accomplished professional hailing from Bandung, West Java, Indonesia — a man of many disciplines, whose career has traversed the varied landscapes of Sales Management, Financial Administration, Data Analysis, and Tax Management.
+                      <strong>Muhamad Irpan Yasin</strong> is a versatile and accomplished professional hailing from Bandung, West Java, Indonesia — a man of many disciplines, whose career has traversed the varied landscapes of Sales Management, Administration, Data Analysis, and Tax Management.
                     </p>
                     <p className="book-p">
-                      With more than <strong>fifteen years</strong> of comprehensive professional experience, he has cultivated a rare breadth of expertise spanning diverse industries. His proven track record speaks of results delivered, teams led with purpose, and excellence achieved across every endeavour.
+                      With more than <strong>fifteen years</strong> of comprehensive professional experience, he has cultivated a rare breadth of expertise spanning diverse industries. His proven track record speaks of results delivered, teams led with purpose, and administrative excellence achieved across every endeavour.
                     </p>
                     <div className="book-h3">Vital Statistics</div>
                     <div className="stats-row">
@@ -426,41 +406,22 @@ export default function BookPortfolio() {
                 <div className="sec-break">✦ · · · ✦</div>
 
                 {[
-                  {icon:'💼',title:'Sales & Business',      level:'Expert',    chips:[{label:'Team Leadership',level:'Expert'},{label:'Sales Strategy',level:'Expert'},{label:'Business Dev',level:'Expert'},{label:'Client Relations',level:'Advanced'},{label:'Negotiation',level:'Advanced'}]},
-                  {icon:'💰',title:'Finance & Tax',         level:'Expert',    chips:[{label:'Tax Management',level:'Expert'},{label:'Financial Reports',level:'Expert'},{label:'Receivables',level:'Advanced'},{label:'Bookkeeping',level:'Advanced'},{label:'Budget Planning',level:'Proficient'}]},
-                  {icon:'📊',title:'Data & Analytics',      level:'Advanced',  chips:[{label:'Data Analysis',level:'Advanced'},{label:'Sales Analytics',level:'Advanced'},{label:'Reporting',level:'Advanced'},{label:'WordPress',level:'Proficient'},{label:'Optimisation',level:'Proficient'}]},
-                  {icon:'💻',title:'Technical Tools',       level:'Advanced',  chips:[{label:'MS Excel',level:'Expert'},{label:'MS Word',level:'Expert'},{label:'PowerPoint',level:'Advanced'},{label:'Outlook',level:'Advanced'},{label:'MS Office Suite',level:'Expert'}]},
-                  {icon:'🎯',title:'Management',            level:'Expert',    chips:[{label:'Team Management',level:'Expert'},{label:'Strategic Planning',level:'Expert'},{label:'Time Management',level:'Expert'},{label:'Problem Solving',level:'Advanced'},{label:'Decision Making',level:'Advanced'}]},
-                  {icon:'🤝',title:'Soft Skills',           level:'Expert',    chips:[{label:'Communication',level:'Expert'},{label:'Teamwork',level:'Expert'},{label:'Fast Learner',level:'Expert'},{label:'Adaptable',level:'Expert'},{label:'Resilient',level:'Advanced'}]},
-                ].map(s => {
-                  const cfg = SKILL_LEVELS[s.level]
-                  return (
-                    <div key={s.title} className="skill-entry">
-                      <div className="skill-entry-header">
-                        <div className="skill-entry-title"><span>{s.icon}</span> {s.title}</div>
-                        <span className="skill-level-badge" style={{color:cfg.color,background:cfg.bg,border:`1px solid ${cfg.border}`}}>
-                          {s.level}<SkillDots level={s.level}/>
-                        </span>
-                      </div>
-                      <div className="skill-chips">
-                        {s.chips.map(c => {
-                          const cc = SKILL_LEVELS[c.level]
-                          return <span key={c.label} className="skill-chip" style={{borderColor:cc.border}}><span className="skill-chip-dot" style={{background:cc.color}}/>{c.label}</span>
-                        })}
-                      </div>
+                  { icon: '💼', title: 'Sales & Business',    pct: 82, chips: ['Team Leadership','Sales Strategy','Business Development','Client Relations','Negotiation'] },
+                  { icon: '🗂️', title: 'Administration & Tax', pct: 80, chips: ['Tax Management','Administrative Reports','Receivables','Bookkeeping','Budget Planning'] },
+                  { icon: '📊', title: 'Data & Analytics',    pct: 72, chips: ['Data Analysis','Sales Analytics','Reporting','WordPress','Optimisation'] },
+                  { icon: '💻', title: 'Technical Tools',     pct: 75, chips: ['MS Excel','MS Word','PowerPoint','Outlook','MS Office Suite'] },
+                  { icon: '🎯', title: 'Management',          pct: 80, chips: ['Team Management','Strategic Planning','Time Management','Problem Solving','Decision Making'] },
+                  { icon: '🤝', title: 'Soft Skills',         pct: 85, chips: ['Communication','Teamwork','Fast Learner','Adaptable','Resilient'] },
+                ].map(s => (
+                  <div key={s.title} className="skill-entry">
+                    <div className="skill-entry-title"><span>{s.icon}</span> {s.title}</div>
+                    <div className="skill-ink-bar-wrap">
+                      <div className="skill-ink-bar" style={{ width: `${s.pct}%` }} />
+                      <span className="skill-ink-pct">{s.pct}%</span>
                     </div>
-                  )
-                })}
-
-                <div className="skill-legend">
-                  <span style={{fontFamily:'var(--display)',fontSize:'.42rem',letterSpacing:'.1em',color:'var(--ink3)',marginRight:'.8rem',textTransform:'uppercase'}}>Legend:</span>
-                  {Object.entries(SKILL_LEVELS).map(([lvl,cfg]) => (
-                    <div key={lvl} className="skill-legend-item">
-                      <SkillDots level={lvl}/>
-                      <span style={{color:cfg.color,fontFamily:'var(--display)',fontSize:'.42rem',letterSpacing:'.06em',marginLeft:'.3rem'}}>{lvl}</span>
-                    </div>
-                  ))}
-                </div>
+                    <div className="skill-chips">{s.chips.map(c => <span key={c} className="skill-chip">{c}</span>)}</div>
+                  </div>
+                ))}
                 <div className="page-num-right">{pageNums.r}</div>
               </div>
 
