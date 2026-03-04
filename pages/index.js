@@ -61,13 +61,13 @@ export default function BookPortfolio() {
       setPageNums({ l: CHAPTERS[id].pageL, r: CHAPTERS[id].pageR })
       if (rightScrollRef.current) rightScrollRef.current.scrollTop = 0
       if (id === 'home') trigCounters()
-    }, 400)
+    }, 550)
 
     // End flip
     setTimeout(() => {
       setIsFlipping(false)
       flipping.current = false
-    }, 850)
+    }, 1150)
   }, [current, trigCounters])
 
   // Keyboard lightbox
@@ -106,7 +106,7 @@ export default function BookPortfolio() {
   }
 
   const flipStyle = isFlipping ? {
-    animation: `${flipDir === 'forward' ? 'flipForward' : 'flipBackward'} 0.85s cubic-bezier(0.45,0,0.55,1) forwards`
+    animation: `${flipDir === 'forward' ? 'flipForward' : 'flipBackward'} 1.1s cubic-bezier(0.25, 0.1, 0.25, 1) forwards`
   } : {}
 
   return (
@@ -115,18 +115,22 @@ export default function BookPortfolio() {
         <title>Muhamad Irpan Yasin — Portfolio</title>
         <style>{`
           @keyframes flipForward {
-            0%   { transform: perspective(2400px) rotateY(0deg); box-shadow: none; }
-            25%  { transform: perspective(2400px) rotateY(-45deg); }
-            50%  { transform: perspective(2400px) rotateY(-90deg); }
-            75%  { transform: perspective(2400px) rotateY(-135deg); }
-            100% { transform: perspective(2400px) rotateY(-180deg); opacity: 0; }
+            0%   { transform: perspective(1600px) rotateY(0deg); box-shadow: 4px 0 20px rgba(0,0,0,0.12); }
+            15%  { transform: perspective(1600px) rotateY(-22deg); box-shadow: 14px 0 45px rgba(0,0,0,0.28); }
+            45%  { transform: perspective(1600px) rotateY(-75deg); box-shadow: 22px 0 65px rgba(0,0,0,0.38); }
+            50%  { transform: perspective(1600px) rotateY(-90deg); box-shadow: 26px 0 75px rgba(0,0,0,0.42); }
+            55%  { transform: perspective(1600px) rotateY(-105deg); box-shadow: 22px 0 65px rgba(0,0,0,0.38); }
+            82%  { transform: perspective(1600px) rotateY(-158deg); box-shadow: 8px 0 28px rgba(0,0,0,0.18); opacity: 0.7; }
+            100% { transform: perspective(1600px) rotateY(-180deg); box-shadow: none; opacity: 0; }
           }
           @keyframes flipBackward {
-            0%   { transform: perspective(2400px) rotateY(-180deg); opacity: 0; }
-            25%  { transform: perspective(2400px) rotateY(-135deg); opacity: 1; }
-            50%  { transform: perspective(2400px) rotateY(-90deg); }
-            75%  { transform: perspective(2400px) rotateY(-45deg); }
-            100% { transform: perspective(2400px) rotateY(0deg); }
+            0%   { transform: perspective(1600px) rotateY(-180deg); box-shadow: none; opacity: 0; }
+            18%  { transform: perspective(1600px) rotateY(-158deg); box-shadow: 8px 0 28px rgba(0,0,0,0.18); opacity: 0.7; }
+            45%  { transform: perspective(1600px) rotateY(-105deg); box-shadow: 22px 0 65px rgba(0,0,0,0.38); opacity: 1; }
+            50%  { transform: perspective(1600px) rotateY(-90deg); box-shadow: 26px 0 75px rgba(0,0,0,0.42); }
+            55%  { transform: perspective(1600px) rotateY(-75deg); box-shadow: 22px 0 65px rgba(0,0,0,0.38); }
+            85%  { transform: perspective(1600px) rotateY(-22deg); box-shadow: 14px 0 45px rgba(0,0,0,0.28); }
+            100% { transform: perspective(1600px) rotateY(0deg); box-shadow: 4px 0 20px rgba(0,0,0,0.12); }
           }
           .flip-leaf {
             position: absolute;
@@ -135,19 +139,26 @@ export default function BookPortfolio() {
             transform-style: preserve-3d;
             pointer-events: none;
             z-index: 40;
-            background: linear-gradient(180deg, #f4ead5 0%, #ede0c4 60%, #e8d5b0 100%);
-            box-shadow: 8px 0 30px rgba(0,0,0,0.3);
+            background: linear-gradient(108deg, #e8d5b0 0%, #f4ead5 38%, #ede0c4 65%, #e2cfa0 100%);
+            will-change: transform, box-shadow;
           }
           .flip-leaf::before {
             content: '';
             position: absolute; inset: 0;
-            background: linear-gradient(90deg, rgba(0,0,0,0.18) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.08) 100%);
+            background: linear-gradient(90deg,
+              rgba(0,0,0,0.24) 0%,
+              rgba(0,0,0,0.07) 16%,
+              rgba(255,248,230,0.18) 32%,
+              transparent 48%,
+              rgba(0,0,0,0.03) 72%,
+              rgba(0,0,0,0.12) 100%
+            );
             pointer-events: none; z-index: 1;
           }
           .flip-leaf::after {
             content: '';
             position: absolute; inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
             opacity: .5; pointer-events: none; z-index: 0;
           }
         `}</style>
@@ -307,7 +318,7 @@ export default function BookPortfolio() {
                   { num: '§ III', tag: 'School Website',    title: 'Early Childhood School Website', desc: "A clean, welcoming website for an early childhood school. Built to help parents learn about the school's programmes and how to enrol their little ones.",                                        tech: ['Next.js','Tailwind','Vercel'],            links: [{ href: 'https://paud-fajar-pagi.vercel.app/', label: '→ Visit Application' }] },
                   { num: '§ IV',  tag: 'Personal Portfolio',title: 'Portfolio Sites',            desc: 'Custom-built portfolio websites for real clients — designed to make strong first impressions and showcase their unique skills to prospective employers.',                                           tech: ['Next.js','CSS','Vercel'],                links: [{ href: 'https://m-nazar.vercel.app/', label: '→ Nazar Portfolio' }, { href: 'https://portofolio-anisa.vercel.app/', label: '→ Anisa Portfolio' }] },
                   { num: '§ V',   tag: 'Machine Learning',  title: 'Sales ML Analytics',        desc: 'An AI-powered analytics platform using machine learning to uncover sales patterns, forecast trends, and deliver actionable business insights in real-time.',                                        tech: ['Python','Streamlit','ML'],               links: [{ href: 'https://sales-ml-analytics.streamlit.app/', label: '→ Visit Application' }] },
-                  { num: '§ VI',  tag: 'E-Commerce',        title: 'FreshMarket Online Store',  desc: 'A fully functional e-commerce store for fresh groceries — complete with product catalogue, cart system, and a smooth, intuitive checkout experience.',                                              tech: ['Next.js','Tailwind','Vercel'],            links: [{ href: 'https://ecommerce-freshmarket.vercel.app/', label: '→ Visit Application' }] },
+                  { num: '§ VI',  tag: 'E-Commerce & POS',  title: 'Online Store & POS System', desc: 'Full-featured digital commerce solutions — from a fresh grocery e-commerce store with cart & checkout, to a coffee shop POS system with order management and real-time transaction flow.',     tech: ['Next.js','Tailwind','Vercel'],            links: [{ href: 'https://ecommerce-freshmarket.vercel.app/', label: '→ FreshMarket Store' }, { href: 'https://demo-coffee-shop-v2.vercel.app/', label: '→ Coffee Shop POS' }] },
                 ].map(item => (
                   <div key={item.title} className="porto-entry">
                     <div className="porto-entry-header"><span className="porto-num">{item.num}</span><span className="porto-tag">{item.tag}</span></div>
