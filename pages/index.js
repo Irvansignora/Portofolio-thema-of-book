@@ -16,7 +16,7 @@ const CHAPTER_ORDER = ['home','portfolio','projects','skills','social','travel',
 const TRAVEL_PHOTOS = [
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681838/Dieng_4_msizry.jpg', dest:'Dieng, Indonesia',    year:'2023' },
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681775/Puncak_3000Mdpl_zum_ersten_f%C3%BCr_mein_familie..._merbabu_gunung_jqg3jj.webp', dest:'Merbabu Mount, Indonesia',  year:'2024' },
-  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681861/Dieng_1_m1a2rp.jpg,'  dest:'Dieng, Indonesia',     year:'2023' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681861/Dieng_1_m1a2rp.jpg',  dest:'Dieng, Indonesia',     year:'2023' },
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681856/gn_gede_ttv1dd.jpg', dest:'Gede Mount, Indonesia', year:'2024' },
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681832/20230911_083458_z348vn.heic', dest:'Prau Mount, Indonesia', year:'2023' },
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681820/20230911_071913_wex0rt.heic', dest:'Prau Mount, Indonesia', year:'2023' },
