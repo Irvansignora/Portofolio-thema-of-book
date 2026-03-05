@@ -2,23 +2,62 @@ import Head from 'next/head'
 import { useEffect, useRef, useState, useCallback } from 'react'
 
 const CHAPTERS = {
-  home:      { pageL: '— i —',        pageR: '— 1 —',  numRoman: 'I',   title: 'Preface',            page: 1  },
-  portfolio: { pageL: '— vii —',      pageR: '— 7 —',  numRoman: 'II',  title: 'Portfolio',          page: 7  },
-  projects:  { pageL: '— xiv —',      pageR: '— 14 —', numRoman: 'III', title: 'Projects',           page: 14 },
-  skills:    { pageL: '— xxi —',      pageR: '— 21 —', numRoman: 'IV',  title: 'Skills & Expertise', page: 21 },
-  social:    { pageL: '— xxviii —',   pageR: '— 28 —', numRoman: 'V',   title: 'Social Experience',  page: 28 },
-  contact:   { pageL: '— xxxv —',     pageR: '— 35 —', numRoman: 'VI',  title: 'Correspondence',     page: 35 },
+  home:      { pageL: '— i —',        pageR: '— 1 —',  numRoman: 'I',    title: 'Preface',            page: 1  },
+  portfolio: { pageL: '— vii —',      pageR: '— 7 —',  numRoman: 'II',   title: 'Portfolio',          page: 7  },
+  projects:  { pageL: '— xiv —',      pageR: '— 14 —', numRoman: 'III',  title: 'Projects',           page: 14 },
+  skills:    { pageL: '— xxi —',      pageR: '— 21 —', numRoman: 'IV',   title: 'Skills & Expertise', page: 21 },
+  social:    { pageL: '— xxviii —',   pageR: '— 28 —', numRoman: 'V',    title: 'Social Experience',  page: 28 },
+  travel:    { pageL: '— xxxv —',     pageR: '— 35 —', numRoman: 'VI',   title: 'Travel Gallery',     page: 35 },
+  contact:   { pageL: '— xlii —',     pageR: '— 42 —', numRoman: 'VII',  title: 'Correspondence',     page: 42 },
 }
-const CHAPTER_ORDER = ['home','portfolio','projects','skills','social','contact']
+const CHAPTER_ORDER = ['home','portfolio','projects','skills','social','travel','contact']
 
-// Placeholder photos for social section (ganti dengan foto asli nanti)
+// Placeholder travel photos — ganti dengan URL Cloudinary lu
+const TRAVEL_PHOTOS = [
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681838/Dieng_4_msizry.jpg', dest:'Dieng, Indonesia',    year:'2023' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681775/Puncak_3000Mdpl_zum_ersten_f%C3%BCr_mein_familie..._merbabu_gunung_jqg3jj.webp', dest:'Merbabu Mount, Indonesia',  year:'2024' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681861/Dieng_1_m1a2rp.jpg,'  dest:'Dieng, Indonesia',     year:'2023' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681856/gn_gede_ttv1dd.jpg', dest:'Gede Mount, Indonesia', year:'2024' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681832/20230911_083458_z348vn.heic', dest:'Prau Mount, Indonesia', year:'2023' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681820/20230911_071913_wex0rt.heic', dest:'Prau Mount, Indonesia', year:'2023' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772682267/20250607_114807_uyhff4.jpg', dest:'Pangradinan Mount, Indonesia',  year:'2025' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772682397/IMG_20230219_075958_n5lumv.jpg', dest:'Pari Island, Indonesia',     year:'2023' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772682547/20240505_091651_okt1ey.jpg', dest:'Dufan, Indonesia',      year:'2021' },
+]
+
+// Media untuk social section — support foto & video Cloudinary
+// Format: { type:'image'|'video', src:'url', thumb:'url-thumbnail-opsional' }
 const SOCIAL_PLACEHOLDER = {
-  1: ['https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1593113598332-cd288d649433?w=300&h=220&fit=crop'],
-  2: ['https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=300&h=220&fit=crop'],
-  3: ['https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1594708767771-a7502209ff51?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1565711561500-49678a10a63f?w=300&h=220&fit=crop'],
-  4: ['https://images.unsplash.com/photo-1593113616828-6f22bca04804?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1607748851687-ba9a10438621?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=300&h=220&fit=crop'],
-  5: ['https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1560785496-3c9d27877182?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=300&h=220&fit=crop'],
-  6: ['https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?w=300&h=220&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&h=220&fit=crop'],
+  1: [
+    {type:'image',src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772679021/Donasi_speaker_ke_masjid_igbpb3.jpg'},
+    {type:'video',src:'https://res.cloudinary.com/dyhvx9wit/video/upload/v1772679211/Bersih_bersih_Masjid_uhtzus.mp4'},
+    {type:'image',src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772680208/Aksi_Sosial_f6kfge.jpg'},
+  ],
+  2: [
+    {type:'image',src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772679040/Banjir_01_pzud0m.jpg'},
+    {type:'video',src:'https://res.cloudinary.com/dyhvx9wit/video/upload/v1772679251/Aksi_Sosial_Banjir_01_gmctq7.mp4'},
+    {type:'image',src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772679038/Peduli_Banjir_lndedb.jpg'},
+  ],
+  3: [
+    {type:'image',src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772679067/Olahraga_Bareng_Anak2_Yatim_ymmvez.jpg'},
+    {type:'image',src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772679067/Olahraga_Bareng_Anak2_Yatim_ymmvez.jpg'},
+    {type:'image',src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772679022/Alhilal_01_iewoun.jpg'},
+  ],
+  4: [
+    {type:'image',src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772680214/Rihlah_2_cxmahy.jpg'},
+    {type:'video',src:'https://res.cloudinary.com/dyhvx9wit/video/upload/v1772679168/Jambore_Anak_Yatim_xqnrlc.mp4'},
+    {type:'image',src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772679069/Jambore_Anak_Yatim_f6ry9h.jpg'},
+  ],
+  5: [
+    {type:'image',src:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=300&h=220&fit=crop'},
+    {type:'image',src:'https://images.unsplash.com/photo-1560785496-3c9d27877182?w=300&h=220&fit=crop'},
+    {type:'image',src:'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=300&h=220&fit=crop'},
+  ],
+  6: [
+    {type:'image',src:'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=300&h=220&fit=crop'},
+    {type:'image',src:'https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?w=300&h=220&fit=crop'},
+    {type:'image',src:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&h=220&fit=crop'},
+  ],
 }
 
 
@@ -227,16 +266,16 @@ export default function BookPortfolio() {
   }
   const handleLinkLeave = () => setPreviewUrl(null)
 
-  const openLB = (imgs, title) => {
+  const openLB = (imgs, title, startIdx = 0) => {
     const normalized = imgs.map(i => {
       if (typeof i === 'object') {
         const src = i.src.startsWith('http') || i.src.startsWith('/') ? i.src : '/'+i.src
-        return { src, title: i.title||title, cap: i.caption||'' }
+        return { src, type: i.type||'image', title: i.title||title, cap: i.caption||i.cap||'' }
       }
       const src = i.startsWith('http') || i.startsWith('/') ? i : '/'+i
-      return { src, title, cap: '' }
+      return { src, type:'image', title, cap: '' }
     })
-    setLbImgs(normalized); setLbIdx(0); setLbOpen(true)
+    setLbImgs(normalized); setLbIdx(startIdx); setLbOpen(true)
   }
 
   const doSubmit = async (e) => {
@@ -336,12 +375,13 @@ export default function BookPortfolio() {
 
               <nav className="chapter-list">
                 {[
-                  {id:'home',      num:'I',   title:'Preface',            page:1  },
-                  {id:'portfolio', num:'II',  title:'Portfolio',          page:7  },
-                  {id:'projects',  num:'III', title:'Projects',           page:14 },
-                  {id:'skills',    num:'IV',  title:'Skills & Expertise', page:21 },
-                  {id:'social',    num:'V',   title:'Social Experience',  page:28 },
-                  {id:'contact',   num:'VI',  title:'Correspondence',     page:35 },
+                  {id:'home',      num:'I',    title:'Preface',            page:1  },
+                  {id:'portfolio', num:'II',   title:'Portfolio',          page:7  },
+                  {id:'projects',  num:'III',  title:'Projects',           page:14 },
+                  {id:'skills',    num:'IV',   title:'Skills & Expertise', page:21 },
+                  {id:'social',    num:'V',    title:'Social Experience',  page:28 },
+                  {id:'travel',    num:'VI',   title:'Travel Gallery',     page:35 },
+                  {id:'contact',   num:'VII',  title:'Correspondence',     page:42 },
                 ].map(ch => (
                   <button key={ch.id} className={`chapter-btn${current===ch.id?' active':''}`} onClick={() => gotoChapter(ch.id)}>
                     <span className="ch-num">{ch.num}</span>
@@ -436,7 +476,7 @@ export default function BookPortfolio() {
                   {num:'§ I',  tag:'Data Analysis',        title:'Sales Analytics Dashboard',    desc:'Developed a comprehensive sales tracking system using WordPress, enabling real-time monitoring of team performance and revenue trends across multiple territories.',      tech:['WordPress','Data Analysis','Reporting'],       links:[{href:'/sales-dashboard.html',label:'→ View Live Dashboard',ext:true}]},
                   {num:'§ II', tag:'Tax Management',        title:'Tax Performance & Compliance', desc:'Managing VAT, income tax, and multi-branch reporting across corporate entities with data-driven accuracy — ensuring full regulatory compliance at all times.',              tech:['Tax Reporting','Compliance','Reconciliation'],  links:[{href:'/tax-dashboard.html',label:'→ View Live Dashboard',ext:true}]},
                   {num:'§ III',tag:'Sales Leadership',      title:'Sales Team Development',       desc:'Successfully supervised and trained multiple sales teams, consistently achieving and exceeding quarterly targets through effective coaching and strategic planning.',         tech:['Team Training','Sales Strategy','Performance'],  links:[],onGallery:true,galleryImgs:['porto-3-1.jpg','porto-3-2.jpg','porto-3-3.jpg'],galleryTitle:'Sales Team Development'},
-                  {num:'§ IV', tag:'Professional Credentials',title:'Credentials & Recognition', desc:'A distinguished portfolio of credentials — from Japanese and German language certificates to awards of excellence recognising outstanding contribution to commerce.',       tech:['Certifications','Awards','Achievement'],         links:[],onCerts:true},
+                  {num:'§ IV', tag:'Professional Development',title:'Credentials & Recognition', desc:'A distinguished portfolio of credentials — from Japanese and German language certificates to awards of excellence recognising outstanding contribution to commerce.',       tech:['Certifications','Awards','Achievement'],         links:[],onCerts:true},
                   {num:'§ V',  tag:'Business Development',  title:'Partner Network Expansion',    desc:'Built and maintained strategic relationships with sales partners, expanding market reach and increasing revenue streams across regions through effective networking.',      tech:['Partnership','Networking','Growth'],             links:[],onGallery:true,galleryImgs:['porto-6-1.jpg','porto-6-2.jpg','porto-6-3.jpg'],galleryTitle:'Partner Network'},
                 ].map(item => (
                   <div key={item.title} className="porto-entry">
@@ -447,7 +487,7 @@ export default function BookPortfolio() {
                     {(item.links.length>0||item.onCerts||item.onGallery) && (
                       <div className="porto-links">
                         {item.links.map(l => <a key={l.label} className="porto-link" href={l.href} target={l.ext?'_blank':undefined} rel="noopener">{l.label}</a>)}
-                        {item.onCerts && <button className="porto-link" onClick={() => openLB([{src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772676080/JFT_BASIC_M_Irpan_Yasin_page-0001_crpcof.jpg',title:'Japanese Language',caption:'JFT Certificate'},{src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772676181/Zertifikat_B1_DLMF_page-0001_bhxsts.jpg',title:'German Language',caption:'Deutsch Zertifikat'},{src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772676073/FPUH3_M_Irpan_Yasin_Sertifikat_1_page-0001_hnvkjs.jpg',title:'Hilal Leadership Community',caption:'Excellence Recognition'},{src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772676065/FPUH3_M_Irpan_Yasin_Sertifikat_1_page-0002_k7wyr8.jpg',title:'HLC Award',caption:'Excellence Recognition'},{src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772676174/Mindluster_Certificate_Ms_Excel_page-0001_zd5ccz.jpg',title:'MS Excel Cert',caption:'Advanced Excel'},{src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772676077/Auszeichnungsplakette_page-0001_uyed4g.jpg',title:'Award',caption:'Best Employee'}],'Credentials')}>→ View Certificates</button>}
+                        {item.onCerts && <button className="porto-link" onClick={() => openLB([{src:'nihongo.jpg',title:'Japanese Language',caption:'JLPT Certificate'},{src:'deutsch.jpg',title:'German Language',caption:'Deutsch Zertifikat'},{src:'hlc1.jpg',title:'HLC Award',caption:'Excellence Recognition'},{src:'hlc-2.jpg',title:'HLC Award 2',caption:'Excellence Recognition'},{src:'msexcel1.jpg',title:'MS Excel Cert',caption:'Advanced Excel'},{src:'msExcel2.jpg',title:'MS Excel Advanced',caption:'Expert Excel'}],'Credentials')}>→ View Certificates</button>}
                         {item.onGallery && <button className="porto-link" onClick={() => openLB(item.galleryImgs,item.galleryTitle)}>→ View Gallery</button>}
                       </div>
                     )}
@@ -499,9 +539,9 @@ export default function BookPortfolio() {
 
                 {[
                   { icon: '💼', title: 'Sales & Business',    pct: 82, chips: ['Team Leadership','Sales Strategy','Business Development','Client Relations','Negotiation'] },
-                  { icon: '🗂️', title: 'Administration & Tax', pct: 85, chips: ['Tax Management','Administrative Reports','Receivables','Bookkeeping','Budget Planning'] },
-                  { icon: '📊', title: 'Data & Analytics',    pct: 85, chips: ['Data Analysis','Sales Analytics','Reporting','WordPress','Optimisation'] },
-                  { icon: '💻', title: 'Technical Tools',     pct: 70, chips: ['MS Excel','MS Word','PowerPoint','Outlook','MS Office Suite'] },
+                  { icon: '🗂️', title: 'Administration & Tax', pct: 80, chips: ['Tax Management','Administrative Reports','Receivables','Bookkeeping','Budget Planning'] },
+                  { icon: '📊', title: 'Data & Analytics',    pct: 72, chips: ['Data Analysis','Sales Analytics','Reporting','WordPress','Optimisation'] },
+                  { icon: '💻', title: 'Technical Tools',     pct: 75, chips: ['MS Excel','MS Word','PowerPoint','Outlook','MS Office Suite'] },
                   { icon: '🎯', title: 'Management',          pct: 80, chips: ['Team Management','Strategic Planning','Time Management','Problem Solving','Decision Making'] },
                   { icon: '🤝', title: 'Soft Skills',         pct: 85, chips: ['Communication','Teamwork','Fast Learner','Adaptable','Resilient'] },
                 ].map(s => (
@@ -541,12 +581,31 @@ export default function BookPortfolio() {
                       <div className="social-title">{s.title}</div>
                       <p className="social-desc">{s.desc}</p>
                       <div className="social-photo-strip">
-                        {SOCIAL_PLACEHOLDER[s.imgSet].map((imgSrc,i) => (
-                          <div key={i} className="social-photo-frame" onClick={() => openLB(SOCIAL_PLACEHOLDER[s.imgSet].map(src=>({src,title:s.title,caption:s.cat})),s.title)} style={{animationDelay:`${i*0.08}s`}}>
-                            <img src={imgSrc} alt={`${s.title} ${i+1}`} onError={e=>{if(e.target.closest('.social-photo-frame'))e.target.closest('.social-photo-frame').style.display='none'}}/>
-                            <div className="social-photo-overlay"><span>✦</span></div>
-                          </div>
-                        ))}
+                        {SOCIAL_PLACEHOLDER[s.imgSet].map((media, i) => {
+                          const isVideo = media.type === 'video'
+                          // Untuk video Cloudinary, generate thumbnail otomatis
+                          const thumb = media.thumb || (isVideo ? media.src.replace('/video/upload/', '/video/upload/so_0,w_300,h_220,c_fill/').replace(/\.(mp4|mov|avi|webm)$/i, '.jpg') : null)
+                          return (
+                            <div key={i} className="social-photo-frame" style={{animationDelay:`${i*0.08}s`}}
+                              onClick={() => {
+                                const items = SOCIAL_PLACEHOLDER[s.imgSet].map(m => ({
+                                  src: m.src, type: m.type || 'image', title: s.title, cap: s.cat
+                                }))
+                                openLB(items, s.title, i)
+                              }}
+                            >
+                              {isVideo ? (
+                                <>
+                                  <img src={thumb} alt={`${s.title} video ${i+1}`} onError={e=>{e.target.style.background='#1a1005'}}/>
+                                  <div className="video-play-btn">▶</div>
+                                </>
+                              ) : (
+                                <img src={media.src} alt={`${s.title} ${i+1}`} onError={e=>{if(e.target.closest('.social-photo-frame'))e.target.closest('.social-photo-frame').style.display='none'}}/>
+                              )}
+                              <div className="social-photo-overlay"><span>{isVideo ? '▶' : '✦'}</span></div>
+                            </div>
+                          )
+                        })}
                       </div>
                       <p className="photo-placeholder-note">* Foto sementara — ganti dengan foto asli di folder /public (social-{s.num.toLowerCase()}-img1.jpg, dst.)</p>
                     </div>
@@ -555,10 +614,43 @@ export default function BookPortfolio() {
                 <div className="page-num-right">{pageNums.r}</div>
               </div>
 
+              {/* ===== TRAVEL GALLERY ===== */}
+              <div className={`content-section${current==='travel'?' active':''}`}>
+                <div className="ch-heading">
+                  <span className="ch-heading-num">Chapter VI</span>
+                  <h2 className="ch-heading-title">Travel <em>Gallery</em></h2>
+                </div>
+                <p className="book-p dropcap">Beyond the desk and the boardroom, the author finds renewal and perspective in the art of travel — exploring the diverse landscapes, cultures, and wonders that this archipelago and the wider world have to offer.</p>
+                <div className="sec-break">✦ · · · ✦</div>
+
+                <div className="travel-grid">
+                  {TRAVEL_PHOTOS.map((photo, i) => (
+                    <div
+                      key={i}
+                      className={`travel-card travel-card-${(i % 3)}`}
+                      onClick={() => openLB(TRAVEL_PHOTOS.map(p => ({ src: p.src, title: p.dest, cap: p.year })), photo.dest, i)}
+                    >
+                      <div className="travel-card-inner">
+                        <img src={photo.src} alt={photo.dest} onError={e => e.target.closest('.travel-card').style.display='none'} />
+                        <div className="travel-card-footer">
+                          <span className="travel-dest">📍 {photo.dest}</span>
+                          <span className="travel-year">{photo.year}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="photo-placeholder-note" style={{textAlign:'center',marginTop:'1rem'}}>
+                  * Foto placeholder — ganti src di TRAVEL_PHOTOS dengan URL Cloudinary lu
+                </p>
+                <div className="page-num-right">{pageNums.r}</div>
+              </div>
+
               {/* ===== CONTACT ===== */}
               <div className={`content-section${current==='contact'?' active':''}`}>
                 <div className="ch-heading">
-                  <span className="ch-heading-num">Chapter VI</span>
+                  <span className="ch-heading-num">Chapter VII</span>
                   <h2 className="ch-heading-title">Correspondence <em>&amp; Contact</em></h2>
                 </div>
                 <p className="book-p dropcap">Should you wish to discuss a matter of professional collaboration or simply extend a greeting, the author may be reached through the following channels. All enquiries are most warmly welcomed.</p>
@@ -625,7 +717,7 @@ export default function BookPortfolio() {
             <div style={{fontFamily:'var(--display)',fontSize:'.42rem',letterSpacing:'.2em',color:'rgba(139,105,20,.6)',textAlign:'center',marginBottom:'1.2rem',textTransform:'uppercase'}}>Table of Contents</div>
             {CHAPTER_ORDER.map((id,i) => (
               <button key={id} className={`mobile-nav-btn${current===id?' active':''}`} onClick={() => gotoChapter(id)}>
-                <span className="mobile-nav-num">{['I','II','III','IV','V','VI'][i]}</span>
+                <span className="mobile-nav-num">{['I','II','III','IV','V','VI','VII'][i]}</span>
                 <span>{CHAPTERS[id].title}</span>
                 {current===id && <span style={{marginLeft:'auto',color:'var(--gold)'}}>◆</span>}
               </button>
@@ -680,7 +772,17 @@ export default function BookPortfolio() {
           <button className="lb-x" onClick={() => setLbOpen(false)}>Close ✕</button>
           {lbImgs[lbIdx] && (
             <>
-              <img id="lb-img" src={lbImgs[lbIdx].src} alt={lbImgs[lbIdx].title} />
+              {lbImgs[lbIdx].type === 'video' ? (
+                <video
+                  key={lbImgs[lbIdx].src}
+                  id="lb-img"
+                  src={lbImgs[lbIdx].src}
+                  controls autoPlay
+                  style={{maxWidth:'100%', maxHeight:'65vh', border:'2px solid rgba(139,105,20,.5)', boxShadow:'0 0 60px rgba(139,105,20,.3)'}}
+                />
+              ) : (
+                <img id="lb-img" src={lbImgs[lbIdx].src} alt={lbImgs[lbIdx].title} />
+              )}
               <div className="lb-title">{lbImgs[lbIdx].title}</div>
               {lbImgs[lbIdx].cap && <div className="lb-cap">{lbImgs[lbIdx].cap}</div>}
             </>
