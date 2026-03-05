@@ -15,7 +15,7 @@ const CHAPTER_ORDER = ['home','portfolio','projects','skills','social','travel',
 // Placeholder travel photos — ganti dengan URL Cloudinary lu
 const TRAVEL_PHOTOS = [
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681838/Dieng_4_msizry.jpg', dest:'Dieng, Indonesia',    year:'2024' },
-  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681775/Puncak_3000Mdpl_zum_ersten_f%C3%BCr_mein_familie..._merbabu_gunung_jqg3jj.webp', dest:'Merbabu Mount, Indonesia',  year:'2024' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772684165/IMG_20240819_112414_144_o78tbx.jpg', dest:'Merbabu Mount, Indonesia',  year:'2024' },
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681861/Dieng_1_m1a2rp.jpg',  dest:'Dieng, Indonesia',     year:'2024' },
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772681856/gn_gede_ttv1dd.jpg', dest:'Gede Mount, Indonesia', year:'2024' },
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772683058/20230911_071846_hvd7oc.jpg', dest:'Prau Mount, Indonesia', year:'2023' },
