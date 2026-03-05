@@ -227,7 +227,7 @@ export default function BookPortfolio() {
   }
   const handleLinkLeave = () => setPreviewUrl(null)
 
- = (imgs, title) => {
+  const openLB = (imgs, title) => {
     const normalized = imgs.map(i => {
       if (typeof i === 'object') {
         const src = i.src.startsWith('http') || i.src.startsWith('/') ? i.src : '/'+i.src
