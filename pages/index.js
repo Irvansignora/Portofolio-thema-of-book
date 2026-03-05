@@ -42,11 +42,15 @@ export default function BookPortfolio() {
   const [visitCount, setVisitCount]       = useState(null)
   const [sectionVisible, setSectionVisible] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [previewUrl, setPreviewUrl]       = useState(null)
+  const [previewPos, setPreviewPos]       = useState({ x: 0, y: 0 })
 
   const rightScrollRef = useRef(null)
   const leafRef        = useRef(null)
   const flipping       = useRef(false)
   const audioCtx       = useRef(null)
+  const canvasRef      = useRef(null)
+  const particlesRef   = useRef([])
 
   const trigCounters = useCallback(() => {
     setTimeout(() => {
@@ -160,9 +164,70 @@ export default function BookPortfolio() {
     return () => window.removeEventListener('keydown', onKey)
   }, [lbOpen, lbImgs.length, current, gotoChapter])
 
+  // Particle dust effect
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    let animId
+
+    const resize = () => {
+      canvas.width  = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    // Init particles
+    const COUNT = 55
+    particlesRef.current = Array.from({ length: COUNT }, () => ({
+      x:     Math.random() * window.innerWidth,
+      y:     Math.random() * window.innerHeight,
+      r:     Math.random() * 1.4 + 0.3,
+      vx:    (Math.random() - 0.5) * 0.18,
+      vy:    -(Math.random() * 0.25 + 0.08),
+      alpha: Math.random() * 0.45 + 0.05,
+      life:  Math.random(),
+    }))
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      particlesRef.current.forEach(p => {
+        p.x    += p.vx
+        p.y    += p.vy
+        p.life += 0.003
+        if (p.life > 1 || p.y < -10) {
+          p.x    = Math.random() * canvas.width
+          p.y    = canvas.height + 5
+          p.life = 0
+          p.alpha = Math.random() * 0.45 + 0.05
+        }
+        const fade = Math.sin(p.life * Math.PI)
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(196,152,30,${p.alpha * fade})`
+        ctx.fill()
+      })
+      animId = requestAnimationFrame(draw)
+    }
+    draw()
+    return () => {
+      cancelAnimationFrame(animId)
+      window.removeEventListener('resize', resize)
+    }
+  }, [])
+
   useEffect(() => { trigCounters() }, [trigCounters])
 
-  const openLB = (imgs, title) => {
+  // Hover preview handlers
+  const handleLinkEnter = (e, url) => {
+    const rect = e.target.getBoundingClientRect()
+    setPreviewUrl(`https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`)
+    setPreviewPos({ x: Math.min(rect.left, window.innerWidth - 220), y: rect.top - 145 })
+  }
+  const handleLinkLeave = () => setPreviewUrl(null)
+
+ = (imgs, title) => {
     const normalized = imgs.map(i => {
       if (typeof i === 'object') {
         const src = i.src.startsWith('http') || i.src.startsWith('/') ? i.src : '/'+i.src
@@ -234,6 +299,28 @@ export default function BookPortfolio() {
       </Head>
 
       <div id="book-scene" className={darkMode ? 'dark-mode' : ''}>
+
+      {/* Particle dust canvas */}
+      <canvas ref={canvasRef} style={{position:'fixed',inset:0,zIndex:0,pointerEvents:'none'}} />
+
+      {/* Hover preview popup */}
+      {previewUrl && (
+        <div style={{
+          position:'fixed', left: previewPos.x, top: previewPos.y,
+          width:'200px', height:'130px',
+          zIndex:200, pointerEvents:'none',
+          border:'2px solid rgba(139,105,20,.5)',
+          boxShadow:'0 8px 32px rgba(0,0,0,.6)',
+          background:'#1a1005',
+          overflow:'hidden',
+          animation:'fadeUp .2s ease both',
+        }}>
+          <img src={previewUrl} alt="preview" style={{width:'100%',height:'100%',objectFit:'cover',opacity:.9}} onError={e => e.target.style.display='none'} />
+          <div style={{position:'absolute',bottom:0,left:0,right:0,padding:'.25rem .4rem',background:'rgba(10,5,0,.8)',fontFamily:'var(--display)',fontSize:'.38rem',letterSpacing:'.08em',color:'rgba(196,152,30,.8)',textTransform:'uppercase'}}>Preview</div>
+        </div>
+      )}
+
+
         <div id="book">
 
           <div id="spine" />
@@ -390,7 +477,12 @@ export default function BookPortfolio() {
                     <div className="porto-title">{item.title}</div>
                     <p className="porto-desc">{item.desc}</p>
                     <div className="porto-tech">{item.tech.map(t => <span key={t} className="porto-pill">{t}</span>)}</div>
-                    <div className="porto-links">{item.links.map(l => <a key={l.label} className="porto-link" href={l.href} target="_blank" rel="noopener">{l.label}</a>)}</div>
+                    <div className="porto-links">{item.links.map(l => (
+                      <a key={l.label} className="porto-link" href={l.href} target="_blank" rel="noopener"
+                        onMouseEnter={e => handleLinkEnter(e, l.href)}
+                        onMouseLeave={handleLinkLeave}
+                      >{l.label}</a>
+                    ))}</div>
                   </div>
                 ))}
                 <div className="page-num-right">{pageNums.r}</div>
@@ -408,10 +500,10 @@ export default function BookPortfolio() {
                 {[
                   { icon: '💼', title: 'Sales & Business',    pct: 82, chips: ['Team Leadership','Sales Strategy','Business Development','Client Relations','Negotiation'] },
                   { icon: '🗂️', title: 'Administration & Tax', pct: 80, chips: ['Tax Management','Administrative Reports','Receivables','Bookkeeping','Budget Planning'] },
-                  { icon: '📊', title: 'Data & Analytics',    pct: 82, chips: ['Data Analysis','Sales Analytics','Reporting','WordPress','Optimisation'] },
-                  { icon: '💻', title: 'Technical Tools',     pct: 70, chips: ['MS Excel','MS Word','PowerPoint','Outlook','MS Office Suite'] },
+                  { icon: '📊', title: 'Data & Analytics',    pct: 72, chips: ['Data Analysis','Sales Analytics','Reporting','WordPress','Optimisation'] },
+                  { icon: '💻', title: 'Technical Tools',     pct: 75, chips: ['MS Excel','MS Word','PowerPoint','Outlook','MS Office Suite'] },
                   { icon: '🎯', title: 'Management',          pct: 80, chips: ['Team Management','Strategic Planning','Time Management','Problem Solving','Decision Making'] },
-                  { icon: '🤝', title: 'Soft Skills',         pct: 81, chips: ['Communication','Teamwork','Fast Learner','Adaptable','Resilient'] },
+                  { icon: '🤝', title: 'Soft Skills',         pct: 85, chips: ['Communication','Teamwork','Fast Learner','Adaptable','Resilient'] },
                 ].map(s => (
                   <div key={s.title} className="skill-entry">
                     <div className="skill-entry-title"><span>{s.icon}</span> {s.title}</div>
@@ -567,9 +659,9 @@ export default function BookPortfolio() {
         <button onClick={() => setDarkMode(d=>!d)} className={`toolbar-btn${darkMode?' active':''}`}>
           <span style={{fontSize:'.8rem'}}>{darkMode?'🌙':'☀️'}</span>{darkMode?'Night Ink':'Day Parchment'}
         </button>
-        <button onClick={() => window.print()} className="toolbar-btn">
-          <span style={{fontSize:'.8rem'}}>🖨</span>Save as PDF
-        </button>
+        <a href="/cv.pdf" download="CV-Muhamad-Irpan-Yasin.pdf" className="toolbar-btn" style={{textDecoration:'none'}}>
+          <span style={{fontSize:'.8rem'}}>📄</span>Get CV
+        </a>
         <a href="https://www.linkedin.com/in/muhamad-irpan-yasin" target="_blank" rel="noopener" className="toolbar-btn" style={{textDecoration:'none'}}>
           <span style={{fontSize:'.8rem'}}>💼</span>LinkedIn
         </a>
