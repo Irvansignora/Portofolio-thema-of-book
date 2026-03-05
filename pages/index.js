@@ -429,7 +429,7 @@ export default function BookPortfolio() {
                     <div className="book-h3">Vital Statistics</div>
                     <div className="stats-row">
                       <div className="stat-box"><div className="sn" data-target="15" data-suf="+">0</div><div className="sl">Years Experience</div></div>
-                      <div className="stat-box"><div className="sn" data-target="8" data-suf="+">0</div><div className="sl">Positions Held</div></div>
+                      <div className="stat-box"><div className="sn" data-target="6" data-suf="+">0</div><div className="sl">Positions Held</div></div>
                       <div className="stat-box"><div className="sn" data-target="4">0</div><div className="sl">Tongues Spoken</div></div>
                     </div>
                     <div className="book-h3">Languages of Correspondence</div>
