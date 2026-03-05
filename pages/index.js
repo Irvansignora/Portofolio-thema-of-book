@@ -500,7 +500,7 @@ export default function BookPortfolio() {
               <div className={`content-section${current==='projects'?' active':''}`}>
                 <div className="ch-heading">
                   <span className="ch-heading-num">Chapter III</span>
-                  <h2 className="ch-heading-title">Web Projects <em>— Live &amp; Deployed</em></h2>
+                  <h2 className="ch-heading-title">Development Projects <em>— Live &amp; Deployed</em></h2>
                 </div>
                 <p className="book-p dropcap">A collection of digital undertakings — real-world applications conceived, constructed, and launched into the world. Each endeavour addresses a genuine need, from personal finance management to community-focused applications.</p>
                 <div className="sec-break">✦ · · · ✦</div>
