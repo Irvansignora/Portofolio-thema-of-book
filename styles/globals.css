@@ -22,22 +22,208 @@
 html, body { height: 100%; overflow: hidden; background: #1a0f05; }
 body { font-family: var(--serif); cursor: default; }
 
-/* ===== BOOK SCENE ===== */
+/* ===== INTRO CURTAIN ===== */
+.intro-curtain {
+  position: fixed; inset: 0; z-index: 9000;
+  background: radial-gradient(ellipse at 50% 40%, #2a1604 0%, #100800 60%, #050300 100%);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .9s cubic-bezier(.4,0,.2,1), transform .9s cubic-bezier(.4,0,.2,1);
+  pointer-events: all;
+}
+.intro-curtain.opening {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+.intro-curtain-inner {
+  text-align: center;
+  animation: introReveal 1s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes introReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.intro-monogram {
+  font-family: var(--fraktur);
+  font-size: clamp(5rem, 12vw, 9rem);
+  color: var(--gold);
+  line-height: 1;
+  text-shadow: 0 0 60px rgba(181,137,15,.5), 0 0 120px rgba(181,137,15,.2), 2px 2px 0 rgba(181,137,15,.3);
+  animation: introGlow 1.8s ease-in-out infinite alternate;
+}
+@keyframes introGlow {
+  from { text-shadow: 0 0 40px rgba(181,137,15,.4), 0 0 80px rgba(181,137,15,.15); }
+  to   { text-shadow: 0 0 80px rgba(212,168,32,.7), 0 0 140px rgba(181,137,15,.3), 0 0 200px rgba(181,137,15,.1); }
+}
+.intro-title {
+  font-family: var(--display);
+  font-size: clamp(.6rem, 2vw, .9rem);
+  letter-spacing: .45em; text-transform: uppercase;
+  color: rgba(246,236,218,.75);
+  margin-top: .8rem; margin-bottom: .4rem;
+}
+.intro-subtitle {
+  font-family: var(--fell);
+  font-size: clamp(.85rem, 2.5vw, 1.1rem);
+  color: rgba(181,137,15,.6); font-style: italic;
+  letter-spacing: .12em;
+}
+.intro-ornament {
+  font-size: .9rem; color: rgba(181,137,15,.4);
+  letter-spacing: .2em; margin-top: .8rem;
+  animation: introOrnament 1s ease .6s both;
+}
+@keyframes introOrnament {
+  from { opacity: 0; letter-spacing: .6em; }
+  to   { opacity: 1; letter-spacing: .2em; }
+}
+
+/* ===== ATMOSPHERIC BACKGROUND ===== */
 #book-scene {
   width: 100vw; height: 100vh;
   display: flex; align-items: center; justify-content: center;
-  background: radial-gradient(ellipse at center, #2d1a08 0%, #0d0702 100%);
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(80,40,10,.55) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 40% at 15% 50%, rgba(120,55,10,.2) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 40% at 85% 50%, rgba(120,55,10,.2) 0%, transparent 60%),
+    radial-gradient(ellipse at center, #2e1a08 0%, #0e0703 55%, #050301 100%);
   perspective: 1800px;
   overflow: hidden;
 }
+#book-scene::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 80% at 50% -10%, rgba(181,137,15,.06) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+  animation: sceneBreath 6s ease-in-out infinite alternate;
+}
+@keyframes sceneBreath {
+  from { opacity: .6; }
+  to   { opacity: 1; }
+}
 #book-scene::after {
   content: '';
-  position: absolute; bottom: 6%; left: 50%; transform: translateX(-50%);
-  width: 70%; height: 50px;
-  background: radial-gradient(ellipse, rgba(0,0,0,.7), transparent 70%);
-  filter: blur(14px);
+  position: absolute; bottom: 4%; left: 50%; transform: translateX(-50%);
+  width: 80%; height: 60px;
+  background: radial-gradient(ellipse, rgba(0,0,0,.8), transparent 70%);
+  filter: blur(18px);
+  pointer-events: none; z-index: 1;
+}
+
+/* Vignette corners */
+.scene-vignette {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 100% 100% at 0% 0%,   rgba(0,0,0,.55) 0%, transparent 40%),
+    radial-gradient(ellipse 100% 100% at 100% 0%,  rgba(0,0,0,.55) 0%, transparent 40%),
+    radial-gradient(ellipse 100% 100% at 0% 100%,  rgba(0,0,0,.55) 0%, transparent 40%),
+    radial-gradient(ellipse 100% 100% at 100% 100%,rgba(0,0,0,.55) 0%, transparent 40%);
+}
+
+/* Candle glow orbs */
+.scene-candle {
+  position: fixed; bottom: 8%; z-index: 1; pointer-events: none;
+  width: 80px; height: 200px;
+  background: radial-gradient(ellipse at 50% 80%, rgba(200,110,20,.18) 0%, transparent 70%);
+  animation: candleFlicker 3s ease-in-out infinite alternate;
+}
+.scene-candle-l { left: 6%; animation-delay: 0s; }
+.scene-candle-r { right: 6%; animation-delay: 1.2s; }
+@keyframes candleFlicker {
+  0%   { opacity: .5; transform: scaleX(1) scaleY(1); }
+  30%  { opacity: .8; transform: scaleX(1.1) scaleY(.95); }
+  60%  { opacity: .6; transform: scaleX(.9) scaleY(1.05); }
+  100% { opacity: .9; transform: scaleX(1.05) scaleY(.98); }
+}
+
+/* Book opening animation */
+.intro-opening #book {
+  animation: bookOpen .9s cubic-bezier(.16,1,.3,1) .15s both;
+}
+@keyframes bookOpen {
+  from { opacity: 0; transform: rotateX(8deg) scale(.92); }
+  to   { opacity: 1; transform: rotateX(2deg) scale(1); }
+}
+
+/* ===== CHAPTER RIBBON ===== */
+.chapter-ribbon-wrap {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 22px; z-index: 5; pointer-events: none;
+  overflow: hidden;
+}
+.chapter-ribbon-track {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg,
+    rgba(181,137,15,.1) 0%,
+    rgba(181,137,15,.05) 50%,
+    transparent 100%
+  );
+  border-bottom: 1px solid rgba(181,137,15,.15);
+}
+.chapter-ribbon-fill {
+  position: absolute; top: 0; left: 0; bottom: 0;
+  background: linear-gradient(90deg,
+    rgba(155,28,28,.7) 0%,
+    rgba(181,137,15,.8) 50%,
+    rgba(212,168,32,.6) 80%,
+    transparent 100%
+  );
+  transition: width .7s cubic-bezier(.16,1,.3,1);
+  box-shadow: 0 0 8px rgba(181,137,15,.3);
+}
+.chapter-ribbon-fill::after {
+  content: '';
+  position: absolute; right: 0; top: 0; bottom: 0; width: 20px;
+  background: linear-gradient(90deg, transparent, rgba(212,168,32,.4));
+}
+.chapter-ribbon-label {
+  position: absolute; right: .8rem; top: 50%; transform: translateY(-50%);
+  font-family: var(--display); font-size: .38rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(181,137,15,.5);
+  white-space: nowrap;
+}
+
+/* ===== STAGGERED ENTRY ANIMATION ===== */
+.content-section.active .stagger-entry {
+  animation: staggerUp .5s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes staggerUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== TOC SHIMMER ===== */
+.book-monogram {
+  position: relative; display: inline-block; width: 100%;
+}
+.book-monogram::after {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(105deg, transparent 30%, rgba(212,168,32,.35) 50%, transparent 70%);
+  animation: tocShimmer 4s ease-in-out infinite;
   pointer-events: none;
 }
+@keyframes tocShimmer {
+  0%   { left: -80%; opacity: 0; }
+  10%  { opacity: 1; }
+  40%  { left: 140%; opacity: 0; }
+  100% { left: 140%; opacity: 0; }
+}
+
+.ornament {
+  position: relative; overflow: hidden;
+}
+.ornament.shimmer-ornament::after {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212,168,32,.4), transparent);
+  animation: tocShimmer 5s ease-in-out 1.5s infinite;
+  pointer-events: none;
+}
+
+
 
 #book {
   display: flex;
@@ -156,13 +342,13 @@ body { font-family: var(--serif); cursor: default; }
 .right-inner {
   position: relative; z-index: 1;
   height: 100%; overflow-y: auto;
-  padding: 2.2rem 3rem 2rem 2.8rem;
+  padding: 2.8rem 3rem 2rem 2.8rem;
   scrollbar-width: thin;
-  scrollbar-color: rgba(139,105,20,.3) transparent;
+  scrollbar-color: rgba(181,137,15,.3) transparent;
 }
 .right-inner::-webkit-scrollbar { width: 4px; }
 .right-inner::-webkit-scrollbar-track { background: transparent; }
-.right-inner::-webkit-scrollbar-thumb { background: rgba(139,105,20,.3); border-radius: 2px; }
+.right-inner::-webkit-scrollbar-thumb { background: rgba(181,137,15,.35); border-radius: 2px; }
 
 .content-section { display: none; }
 .content-section.active { display: block; animation: chapterReveal .5s cubic-bezier(.16,1,.3,1) both; }
