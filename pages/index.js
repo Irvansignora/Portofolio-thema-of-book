@@ -72,6 +72,70 @@ const SOCIAL_PLACEHOLDER = {
 
 
 
+// ===== PROJECTS DATA — module-level so it's reusable everywhere =====
+const PROJECTS_DATA = [
+  {
+    num:'§ I', tag:'Finance Tool', title:'Finance Manager',
+    subtitle:'Personal Finance & Cash Flow Tracker',
+    desc:'A smart personal finance manager built for clarity, speed, and everyday use. Track income, expenses, and cash flow in real-time with an intuitive dashboard. Built on Firebase for instant data sync across devices.',
+    story:'This project was born from a personal need — managing monthly finances across multiple income streams. The goal was to build something fast, beautiful, and genuinely useful for daily use.',
+    tech:['Firebase','React','Realtime DB','CSS3','Vercel'],
+    links:[{href:'https://monflow-v2.web.app/',label:'→ Visit Application'}],
+    highlights:['Real-time Firebase sync','Multi-category expense tracking','Monthly cash flow charts','Mobile-responsive design'],
+    status:'Live & Deployed', year:'2024',
+  },
+  {
+    num:'§ II', tag:'Lifestyle App', title:'Ramadhan Planner',
+    subtitle:'Spiritual Goal Tracker for Ramadhan',
+    desc:'Plan your most meaningful month with purpose. Track ibadah, set daily goals, and stay consistent throughout Ramadhan — all in one beautiful application. Designed with intentionality and simplicity at its core.',
+    story:'Built as a personal Ramadhan companion, this app emerged from the desire to bring more structure and reflection to the holy month. The minimalist design was intentional — keeping focus on what truly matters.',
+    tech:['Next.js','Vercel','LocalStorage','Tailwind CSS'],
+    links:[{href:'https://ramadhan-planner2.vercel.app/',label:'→ Visit Application'}],
+    highlights:['Daily ibadah tracker','Goal setting & streaks','Beautiful minimalist UI','Offline-capable with LocalStorage'],
+    status:'Live & Deployed', year:'2024',
+  },
+  {
+    num:'§ III', tag:'School Website', title:'Early Childhood School Website',
+    subtitle:'PAUD Fajar Pagi — School Web Presence',
+    desc:"A clean, welcoming website for an early childhood school. Built to help parents learn about the school's programmes and how to enrol their little ones. Focuses on clarity, warmth, and ease of navigation.",
+    story:"Commissioned to help a local early childhood school establish a professional web presence. The design prioritises warmth and approachability — reflecting the school's caring environment.",
+    tech:['Next.js','Tailwind CSS','Vercel','Responsive Design'],
+    links:[{href:'https://paud-fajar-pagi.vercel.app/',label:'→ Visit Application'}],
+    highlights:['Parent-friendly navigation','School programme info','Enrolment information','Mobile-first design'],
+    status:'Live & Deployed', year:'2024',
+  },
+  {
+    num:'§ IV', tag:'Personal Portfolio', title:'Portfolio Sites',
+    subtitle:'Custom Portfolios for Real Clients',
+    desc:'Custom-built portfolio websites for real clients — designed to make strong first impressions and showcase their unique skills to prospective employers and collaborators. Each site is tailored to the individual.',
+    story:'Every portfolio tells a story. These projects involved deep collaboration with each client to understand their personality, goals, and the impression they wanted to leave on the world.',
+    tech:['Next.js','CSS3','Vercel','Responsive Design'],
+    links:[{href:'https://m-nazar.vercel.app/',label:'→ Nazar Portfolio'},{href:'https://portofolio-anisa.vercel.app/',label:'→ Anisa Portfolio'}],
+    highlights:['Tailored to each client','Custom animations','SEO-optimised','Fast loading performance'],
+    status:'Live & Deployed', year:'2024',
+  },
+  {
+    num:'§ V', tag:'Machine Learning', title:'Sales ML Analytics',
+    subtitle:'AI-Powered Sales Intelligence Platform',
+    desc:'An AI-powered analytics platform using machine learning to uncover sales patterns, forecast trends, and deliver actionable business insights in real-time. Built with Python and Streamlit for rapid deployment.',
+    story:'Combining professional sales experience with data science skills, this project bridges the gap between raw sales data and meaningful business decisions. ML models were trained on real sales patterns.',
+    tech:['Python','Streamlit','Scikit-learn','Pandas','Plotly'],
+    links:[{href:'https://sales-ml-analytics.streamlit.app/',label:'→ Visit Application'}],
+    highlights:['ML-powered trend forecasting','Interactive Plotly dashboards','Sales pattern recognition','Actionable business insights'],
+    status:'Live & Deployed', year:'2024',
+  },
+  {
+    num:'§ VI', tag:'E-Commerce & POS', title:'Online Store & POS System',
+    subtitle:'Full-Featured Digital Commerce Solutions',
+    desc:'Full-featured digital commerce solutions — from a fresh grocery e-commerce store with cart & checkout, to a coffee shop POS system with real-time transaction flow. Two complete systems built for real business use.',
+    story:'Two separate projects with a shared goal: making commerce digital, smooth, and reliable. The grocery store focuses on customer experience; the POS system on operational efficiency for staff.',
+    tech:['Next.js','Tailwind CSS','Vercel','Context API'],
+    links:[{href:'https://ecommerce-freshmarket.vercel.app/',label:'→ FreshMarket Store'},{href:'https://demo-coffee-shop-v2.vercel.app/',label:'→ Coffee Shop POS'}],
+    highlights:['Full cart & checkout flow','Real-time POS transactions','Inventory management','Clean, professional UI'],
+    status:'Live & Deployed', year:'2024',
+  },
+]
+
 export default function BookPortfolio() {
   const [current, setCurrent]             = useState('home')
   const [pageNums, setPageNums]           = useState({ l: '— i —', r: '— 1 —' })
@@ -97,8 +161,11 @@ export default function BookPortfolio() {
   const [introPhase, setIntroPhase]       = useState('closed') // 'closed' | 'opening' | 'done'
   const [toolbarOpen, setToolbarOpen]     = useState(false)
   const [konamiActive, setKonamiActive]   = useState(false)
-  const [konamiPhase, setKonamiPhase]     = useState(0) // 0=idle, 1=particles, 2=text, 3=badge
-  const [selectedProject, setSelectedProject] = useState(null) // project detail modal
+  const [konamiPhase, setKonamiPhase]     = useState(0)
+  const [selectedProject, setSelectedProject] = useState(null)
+  const [detailTransition, setDetailTransition] = useState('in') // 'in' | 'out-left' | 'out-right'
+  const [secretTapCount, setSecretTapCount] = useState(0)        // mobile konami: tap logo 7x
+  const secretTapTimer = useRef(null)
 
   // Konami code: ↑↑↓↓←→←→BA
   const konamiSeq = useRef([])
@@ -217,26 +284,61 @@ export default function BookPortfolio() {
     draw()
   }, [])
 
+  const triggerKonami = useCallback(() => {
+    setKonamiActive(true)
+    setKonamiPhase(1)
+    setTimeout(() => { fireKonamiParticles(); setKonamiPhase(2) }, 80)
+    setTimeout(() => setKonamiPhase(3), 600)
+    setTimeout(() => { setKonamiActive(false); setKonamiPhase(0); cancelAnimationFrame(konamiAnimRef.current) }, 5500)
+  }, [fireKonamiParticles])
+
+  // Mobile secret: tap the MIY monogram 7 times quickly
+  const handleSecretTap = useCallback(() => {
+    clearTimeout(secretTapTimer.current)
+    setSecretTapCount(c => {
+      const next = c + 1
+      if (next >= 7) {
+        setSecretTapCount(0)
+        triggerKonami()
+        return 0
+      }
+      secretTapTimer.current = setTimeout(() => setSecretTapCount(0), 2000)
+      return next
+    })
+  }, [triggerKonami])
+
   useEffect(() => {
     const KONAMI = 'ArrowUp,ArrowUp,ArrowDown,ArrowDown,ArrowLeft,ArrowRight,ArrowLeft,ArrowRight,b,a'
     const onKey = (e) => {
       const k = e.key === 'B' ? 'b' : e.key === 'A' ? 'a' : e.key
       konamiSeq.current = [...konamiSeq.current, k].slice(-10)
       if (konamiSeq.current.join(',') === KONAMI) {
-        setKonamiActive(true)
-        setKonamiPhase(1)
         konamiSeq.current = []
-        // Phase sequencing: particles → text → badge → fade
-        setTimeout(() => { fireKonamiParticles(); setKonamiPhase(2) }, 80)
-        setTimeout(() => setKonamiPhase(3), 600)
-        setTimeout(() => { setKonamiActive(false); setKonamiPhase(0); cancelAnimationFrame(konamiAnimRef.current) }, 5500)
+        triggerKonami()
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [fireKonamiParticles])
+  }, [triggerKonami])
 
-  const rightScrollRef = useRef(null)
+  // Animated project navigation — slide out then slide in
+  const navigateProject = useCallback((nextIdx) => {
+    if (nextIdx === selectedProject) return
+    const dir = nextIdx > selectedProject ? 'out-left' : 'out-right'
+    setDetailTransition(dir)
+    setTimeout(() => {
+      setSelectedProject(nextIdx)
+      setDetailTransition('in')
+      if (rightScrollRef.current) rightScrollRef.current.scrollTop = 0
+    }, 250)
+  }, [selectedProject])
+
+  // Open project with reset scroll + transition
+  const openProject = useCallback((idx) => {
+    setDetailTransition('in')
+    setSelectedProject(idx)
+    setTimeout(() => { if (rightScrollRef.current) rightScrollRef.current.scrollTop = 0 }, 50)
+  }, [])
   const leafRef        = useRef(null)
   const flipping       = useRef(false)
   const audioCtx       = useRef(null)
@@ -680,8 +782,20 @@ export default function BookPortfolio() {
           {/* LEFT PAGE */}
           <div id="page-left">
             <div className="left-inner">
-              <div className="book-monogram">MIY</div>
+              <div className="book-monogram" onClick={handleSecretTap} style={{cursor: current==='home' ? 'default':'pointer', userSelect:'none'}}>MIY</div>
               <div className="book-author-name">M. Irpan Yasin</div>
+              {/* Secret tap progress indicator — subtle dots */}
+              {secretTapCount > 0 && (
+                <div style={{display:'flex',gap:'.18rem',justifyContent:'center',marginBottom:'.1rem'}}>
+                  {Array.from({length:7}).map((_,i) => (
+                    <div key={i} style={{
+                      width:'4px',height:'4px',borderRadius:'50%',
+                      background: i < secretTapCount ? 'rgba(212,168,32,.8)' : 'rgba(181,137,15,.18)',
+                      transition:'background .15s',
+                    }}/>
+                  ))}
+                </div>
+              )}
               <div className="ornament shimmer-ornament">— ✦ —</div>
 
               {current === 'projects' ? (
@@ -689,22 +803,16 @@ export default function BookPortfolio() {
                   <div className="toc-label" style={{fontSize:'.52rem',letterSpacing:'.22em'}}>Index of Projects</div>
                   <div className="ornament" style={{fontSize:'.65rem',marginBottom:'.6rem'}}>· · · · · · · · · ·</div>
                   <nav className="chapter-list project-index-list">
-                    {[
-                      {num:'§ I',   title:'Finance Manager',        tag:'Finance Tool'},
-                      {num:'§ II',  title:'Ramadhan Planner',       tag:'Lifestyle App'},
-                      {num:'§ III', title:'School Website',         tag:'School Site'},
-                      {num:'§ IV',  title:'Portfolio Sites',        tag:'Personal Porto'},
-                      {num:'§ V',   title:'Sales ML Analytics',     tag:'Machine Learning'},
-                      {num:'§ VI',  title:'Online Store & POS',     tag:'E-Commerce'},
-                    ].map((p, i) => (
+                    {PROJECTS_DATA.map((p, i) => (
                       <button
                         key={p.num}
                         className={`chapter-btn project-index-btn${selectedProject === i ? ' active' : ''}`}
-                        onClick={() => setSelectedProject(i)}
+                        onClick={() => openProject(i)}
                         style={{animationDelay:`${i*0.06}s`}}
                       >
                         <span className="ch-num" style={{color:'var(--red)',fontSize:'.42rem'}}>{p.num}</span>
                         <span className="ch-title" style={{fontSize:'.7rem',lineHeight:1.2}}>{p.title}</span>
+                        {selectedProject === i && <span style={{marginLeft:'auto',color:'var(--gold)',fontSize:'.65rem'}}>◆</span>}
                       </button>
                     ))}
                   </nav>
@@ -902,24 +1010,17 @@ export default function BookPortfolio() {
                       ← Select a project from the index on the left to view its full details
                     </p>
                     <div className="projects-preview-grid">
-                      {[
-                        {num:'§ I',   tag:'Finance Tool',      title:'Finance Manager',                desc:'Smart personal finance tracker with real-time Firebase sync.',                tech:['Firebase','React','Realtime DB'],   href:'https://monflow-v2.web.app/'},
-                        {num:'§ II',  tag:'Lifestyle App',     title:'Ramadhan Planner',               desc:'Track ibadah and goals throughout Ramadhan in one beautiful app.',           tech:['Next.js','Vercel','LocalStorage'],  href:'https://ramadhan-planner2.vercel.app/'},
-                        {num:'§ III', tag:'School Website',    title:'School Website',                 desc:'Welcoming early childhood school site for enrolment and info.',               tech:['Next.js','Tailwind','Vercel'],      href:'https://paud-fajar-pagi.vercel.app/'},
-                        {num:'§ IV',  tag:'Personal Porto',    title:'Portfolio Sites',                desc:'Custom-built portfolios designed to make strong first impressions.',          tech:['Next.js','CSS','Vercel'],           href:'https://m-nazar.vercel.app/'},
-                        {num:'§ V',   tag:'Machine Learning',  title:'Sales ML Analytics',             desc:'AI-powered sales analytics platform with ML forecasting.',                   tech:['Python','Streamlit','ML'],          href:'https://sales-ml-analytics.streamlit.app/'},
-                        {num:'§ VI',  tag:'E-Commerce & POS',  title:'Online Store & POS',             desc:'Digital commerce from grocery e-store to coffee shop POS system.',           tech:['Next.js','Tailwind','Vercel'],      href:'https://ecommerce-freshmarket.vercel.app/'},
-                      ].map((item, idx) => (
+                      {PROJECTS_DATA.map((item, idx) => (
                         <div key={item.title}
                           className="proj-preview-card stagger-entry"
                           style={{animationDelay:`${idx*0.08}s`}}
-                          onClick={() => setSelectedProject(idx)}
+                          onClick={() => openProject(idx)}
                         >
                           <div className="proj-preview-num">{item.num}</div>
                           <div className="proj-preview-tag">{item.tag}</div>
                           <div className="proj-preview-title">{item.title}</div>
-                          <p className="proj-preview-desc">{item.desc}</p>
-                          <div className="proj-preview-tech">{item.tech.map(t=><span key={t} className="porto-pill">{t}</span>)}</div>
+                          <p className="proj-preview-desc">{item.desc.substring(0,100)}…</p>
+                          <div className="proj-preview-tech">{item.tech.slice(0,3).map(t=><span key={t} className="porto-pill">{t}</span>)}</div>
                           <div className="proj-preview-open">Open details →</div>
                         </div>
                       ))}
@@ -928,85 +1029,21 @@ export default function BookPortfolio() {
                 ) : (
                   /* PROJECT DETAIL VIEW */
                   (() => {
-                    const PROJECTS_DATA = [
-                      {
-                        num:'§ I', tag:'Finance Tool', title:'Finance Manager',
-                        subtitle:'Personal Finance & Cash Flow Tracker',
-                        desc:'A smart personal finance manager built for clarity, speed, and everyday use. Track income, expenses, and cash flow in real-time with an intuitive dashboard. Built on Firebase for instant data sync across devices, ensuring your financial data is always up-to-date.',
-                        story:'This project was born from a personal need — managing monthly finances across multiple income streams. The goal was to build something fast, beautiful, and genuinely useful for daily use.',
-                        tech:['Firebase','React','Realtime DB','CSS3','Vercel'],
-                        links:[{href:'https://monflow-v2.web.app/',label:'→ Visit Application'}],
-                        highlights:['Real-time Firebase sync','Multi-category expense tracking','Monthly cash flow charts','Mobile-responsive design'],
-                        status:'Live & Deployed',
-                        year:'2024',
-                        preview:'https://monflow-v2.web.app/',
-                      },
-                      {
-                        num:'§ II', tag:'Lifestyle App', title:'Ramadhan Planner',
-                        subtitle:'Spiritual Goal Tracker for Ramadhan',
-                        desc:'Plan your most meaningful month with purpose. Track ibadah, set daily goals, and stay consistent throughout Ramadhan — all in one beautiful application. Designed with intentionality and simplicity at its core.',
-                        story:'Built as a personal Ramadhan companion, this app emerged from the desire to bring more structure and reflection to the holy month. The minimalist design was intentional — keeping focus on what truly matters.',
-                        tech:['Next.js','Vercel','LocalStorage','Tailwind CSS'],
-                        links:[{href:'https://ramadhan-planner2.vercel.app/',label:'→ Visit Application'}],
-                        highlights:['Daily ibadah tracker','Goal setting & streaks','Beautiful minimalist UI','Offline-capable with LocalStorage'],
-                        status:'Live & Deployed',
-                        year:'2024',
-                        preview:'https://ramadhan-planner2.vercel.app/',
-                      },
-                      {
-                        num:'§ III', tag:'School Website', title:'Early Childhood School Website',
-                        subtitle:'PAUD Fajar Pagi — School Web Presence',
-                        desc:"A clean, welcoming website for an early childhood school. Built to help parents learn about the school's programmes and how to enrol their little ones. Focuses on clarity, warmth, and ease of navigation.",
-                        story:'Commissioned to help a local early childhood school establish a professional web presence. The design prioritises warmth and approachability — reflecting the school\'s caring environment.',
-                        tech:['Next.js','Tailwind CSS','Vercel','Responsive Design'],
-                        links:[{href:'https://paud-fajar-pagi.vercel.app/',label:'→ Visit Application'}],
-                        highlights:['Parent-friendly navigation','School programme info','Enrolment information','Mobile-first design'],
-                        status:'Live & Deployed',
-                        year:'2024',
-                        preview:'https://paud-fajar-pagi.vercel.app/',
-                      },
-                      {
-                        num:'§ IV', tag:'Personal Portfolio', title:'Portfolio Sites',
-                        subtitle:'Custom Portfolios for Real Clients',
-                        desc:'Custom-built portfolio websites for real clients — designed to make strong first impressions and showcase their unique skills to prospective employers and collaborators. Each site is tailored to the individual.',
-                        story:'Every portfolio tells a story. These projects involved deep collaboration with each client to understand their personality, goals, and the impression they wanted to leave on the world.',
-                        tech:['Next.js','CSS3','Vercel','Responsive Design'],
-                        links:[{href:'https://m-nazar.vercel.app/',label:'→ Nazar Portfolio'},{href:'https://portofolio-anisa.vercel.app/',label:'→ Anisa Portfolio'}],
-                        highlights:['Tailored to each client','Custom animations','SEO-optimised','Fast loading performance'],
-                        status:'Live & Deployed',
-                        year:'2024',
-                        preview:'https://m-nazar.vercel.app/',
-                      },
-                      {
-                        num:'§ V', tag:'Machine Learning', title:'Sales ML Analytics',
-                        subtitle:'AI-Powered Sales Intelligence Platform',
-                        desc:'An AI-powered analytics platform using machine learning to uncover sales patterns, forecast trends, and deliver actionable business insights in real-time. Built with Python and Streamlit for rapid deployment.',
-                        story:'Combining professional sales experience with data science skills, this project bridges the gap between raw sales data and meaningful business decisions. Machine learning models were trained on real sales patterns.',
-                        tech:['Python','Streamlit','Scikit-learn','Pandas','Plotly'],
-                        links:[{href:'https://sales-ml-analytics.streamlit.app/',label:'→ Visit Application'}],
-                        highlights:['ML-powered trend forecasting','Interactive Plotly dashboards','Sales pattern recognition','Actionable business insights'],
-                        status:'Live & Deployed',
-                        year:'2024',
-                        preview:'https://sales-ml-analytics.streamlit.app/',
-                      },
-                      {
-                        num:'§ VI', tag:'E-Commerce & POS', title:'Online Store & POS System',
-                        subtitle:'Full-Featured Digital Commerce Solutions',
-                        desc:'Full-featured digital commerce solutions — from a fresh grocery e-commerce store with cart & checkout, to a coffee shop POS system with real-time transaction flow. Two complete systems built for real business use.',
-                        story:'Two separate projects with a shared goal: making commerce digital, smooth, and reliable. The grocery store focuses on customer experience; the POS system on operational efficiency for staff.',
-                        tech:['Next.js','Tailwind CSS','Vercel','Context API'],
-                        links:[{href:'https://ecommerce-freshmarket.vercel.app/',label:'→ FreshMarket Store'},{href:'https://demo-coffee-shop-v2.vercel.app/',label:'→ Coffee Shop POS'}],
-                        highlights:['Full cart & checkout flow','Real-time POS transactions','Inventory management','Clean, professional UI'],
-                        status:'Live & Deployed',
-                        year:'2024',
-                        preview:'https://ecommerce-freshmarket.vercel.app/',
-                      },
-                    ]
                     const proj = PROJECTS_DATA[selectedProject]
                     return (
-                      <div className="project-detail-page" key={selectedProject}>
+                      <div
+                        className="project-detail-page"
+                        key={selectedProject}
+                        style={{
+                          animation: detailTransition === 'in'
+                            ? 'projSlideIn .28s cubic-bezier(.16,1,.3,1) both'
+                            : detailTransition === 'out-left'
+                            ? 'projSlideOutLeft .25s cubic-bezier(.4,0,1,1) both'
+                            : 'projSlideOutRight .25s cubic-bezier(.4,0,1,1) both',
+                        }}
+                      >
                         <div className="proj-detail-back">
-                          <button className="proj-back-btn" onClick={() => setSelectedProject(null)}>
+                          <button className="proj-back-btn" onClick={() => { setSelectedProject(null); setTimeout(()=>{ if(rightScrollRef.current) rightScrollRef.current.scrollTop=0 },50) }}>
                             ← Back to Overview
                           </button>
                           <span className="proj-detail-status">{proj.status}</span>
@@ -1023,6 +1060,29 @@ export default function BookPortfolio() {
                         </div>
 
                         <div className="proj-detail-divider">✦ · · · ✦</div>
+
+                        {/* Live preview thumbnail */}
+                        <div className="proj-preview-thumbnail">
+                          <div className="proj-preview-thumb-bar">
+                            <span className="proj-thumb-dot" style={{background:'#ff5f57'}}/>
+                            <span className="proj-thumb-dot" style={{background:'#febc2e'}}/>
+                            <span className="proj-thumb-dot" style={{background:'#28c840'}}/>
+                            <span style={{fontFamily:'var(--display)',fontSize:'.32rem',letterSpacing:'.1em',color:'rgba(181,137,15,.5)',flex:1,textAlign:'center',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{proj.links[0]?.href}</span>
+                            <a href={proj.links[0]?.href} target="_blank" rel="noopener" style={{fontFamily:'var(--display)',fontSize:'.3rem',color:'rgba(181,137,15,.5)',textDecoration:'none',whiteSpace:'nowrap'}}>↗ open</a>
+                          </div>
+                          <div className="proj-preview-thumb-body">
+                            <iframe
+                              src={proj.links[0]?.href}
+                              title={proj.title}
+                              loading="lazy"
+                              sandbox="allow-scripts allow-same-origin"
+                              className="proj-preview-iframe"
+                            />
+                            <div className="proj-preview-iframe-overlay" onClick={() => window.open(proj.links[0]?.href,'_blank')}>
+                              <span className="proj-preview-iframe-hint">Click to open app ↗</span>
+                            </div>
+                          </div>
+                        </div>
 
                         <div className="proj-detail-body">
                           <div className="proj-detail-section">
@@ -1071,16 +1131,16 @@ export default function BookPortfolio() {
                         <div className="proj-detail-nav">
                           <button
                             className="proj-nav-btn"
-                            onClick={() => setSelectedProject(i => Math.max(0, i-1))}
+                            onClick={() => navigateProject(selectedProject - 1)}
                             disabled={selectedProject === 0}
                           >← Previous</button>
                           <span style={{fontFamily:'var(--display)',fontSize:'.4rem',letterSpacing:'.2em',color:'rgba(181,137,15,.5)'}}>
-                            {selectedProject+1} / 6
+                            {selectedProject+1} / {PROJECTS_DATA.length}
                           </span>
                           <button
                             className="proj-nav-btn"
-                            onClick={() => setSelectedProject(i => Math.min(5, i+1))}
-                            disabled={selectedProject === 5}
+                            onClick={() => navigateProject(selectedProject + 1)}
+                            disabled={selectedProject === PROJECTS_DATA.length - 1}
                           >Next →</button>
                         </div>
 
@@ -1288,7 +1348,15 @@ export default function BookPortfolio() {
         <div className="mobile-overlay" onClick={() => setMobileMenuOpen(false)}>
           <div className="mobile-drawer" onClick={e => e.stopPropagation()}>
             <button className="mobile-close" onClick={() => setMobileMenuOpen(false)}>✕</button>
-            <div style={{fontFamily:'var(--fraktur)',fontSize:'2rem',color:'var(--gold)',textAlign:'center',marginBottom:'1rem'}}>MIY</div>
+            <div style={{fontFamily:'var(--fraktur)',fontSize:'2rem',color:'var(--gold)',textAlign:'center',marginBottom:'1rem'}} onClick={handleSecretTap}>MIY</div>
+            {/* Secret tap indicator in mobile */}
+            {secretTapCount > 0 && (
+              <div style={{display:'flex',gap:'.2rem',justifyContent:'center',marginBottom:'.6rem'}}>
+                {Array.from({length:7}).map((_,i) => (
+                  <div key={i} style={{width:'5px',height:'5px',borderRadius:'50%',background: i < secretTapCount ? 'rgba(212,168,32,.9)' : 'rgba(181,137,15,.2)',transition:'background .15s'}}/>
+                ))}
+              </div>
+            )}
             <div style={{fontFamily:'var(--display)',fontSize:'.42rem',letterSpacing:'.2em',color:'rgba(139,105,20,.6)',textAlign:'center',marginBottom:'1.2rem',textTransform:'uppercase'}}>Table of Contents</div>
             {CHAPTER_ORDER.map((id,i) => (
               <button key={id} className={`mobile-nav-btn${current===id?' active':''}`} onClick={() => gotoChapter(id)}>
@@ -1297,6 +1365,25 @@ export default function BookPortfolio() {
                 {current===id && <span style={{marginLeft:'auto',color:'var(--gold)'}}>◆</span>}
               </button>
             ))}
+
+            {/* Project sub-index — shown when on projects chapter */}
+            {current === 'projects' && (
+              <div style={{marginTop:'.8rem',borderTop:'1px solid rgba(181,137,15,.2)',paddingTop:'.8rem'}}>
+                <div style={{fontFamily:'var(--display)',fontSize:'.38rem',letterSpacing:'.2em',color:'rgba(139,105,20,.5)',textAlign:'center',marginBottom:'.6rem',textTransform:'uppercase'}}>— Projects Index —</div>
+                {PROJECTS_DATA.map((p, i) => (
+                  <button
+                    key={p.num}
+                    className={`mobile-nav-btn${selectedProject === i ? ' active' : ''}`}
+                    style={{paddingLeft:'1.4rem',fontSize:'.8rem'}}
+                    onClick={() => { openProject(i); setMobileMenuOpen(false) }}
+                  >
+                    <span className="mobile-nav-num" style={{fontSize:'.55rem',color:'var(--red)'}}>{p.num}</span>
+                    <span style={{fontSize:'.78rem'}}>{p.title}</span>
+                    {selectedProject === i && <span style={{marginLeft:'auto',color:'var(--gold)'}}>◆</span>}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
