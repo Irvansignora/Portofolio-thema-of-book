@@ -447,7 +447,7 @@ export default function BookPortfolio() {
                       <span className="otw-sub"> · Full-time · Freelance · Consulting</span>
                     </div>
                     <div className="sec-break">✦ · · · ✦ · · · ✦</div>
-                    <p className="book-p" style={{fontStyle:'italic',fontFamily:'var(--fell)',fontSize:'.88rem',textAlign:'center',color:'var(--ink3)'}}>
+                    <p className="book-p" style={{fontStyle:'italic',fontFamily:'var(--fell)',fontSize:'.94rem',textAlign:'center',color:'var(--ink3)',borderLeft:'3px solid rgba(181,137,15,.35)',paddingLeft:'1rem',marginLeft:'.5rem',lineHeight:'1.8'}}>
                       &ldquo;A versatile professional whose experience is matched only by his dedication to excellence in every endeavour.&rdquo;
                     </p>
                   </div>
@@ -536,6 +536,12 @@ export default function BookPortfolio() {
                 </div>
                 <p className="book-p dropcap">A comprehensive catalogue of competencies — developed through years of dedicated practice and diverse professional engagements. These skills form the foundation upon which all achievements recorded herein have been built.</p>
                 <div className="sec-break">✦ · · · ✦</div>
+                <div className="skill-legend">
+                  <div className="skill-legend-item"><div className="skill-legend-dot" style={{background:'#9b1c1c'}}/> Foundational</div>
+                  <div className="skill-legend-item"><div className="skill-legend-dot" style={{background:'#c4431a'}}/> Proficient</div>
+                  <div className="skill-legend-item"><div className="skill-legend-dot" style={{background:'#b5890f'}}/> Advanced</div>
+                  <div className="skill-legend-item"><div className="skill-legend-dot" style={{background:'#d4a820'}}/> Expert</div>
+                </div>
 
                 {[
                   { icon: '💼', title: 'Sales & Business',    pct: 80, chips: ['Team Leadership','Sales Strategy','Business Development','Client Relations','Negotiation'] },
@@ -680,6 +686,10 @@ export default function BookPortfolio() {
                 </div>
 
                 <div className="book-h3">Compose a Letter</div>
+                <div className="wax-seal">
+                  <div className="wax-seal-circle">MIY</div>
+                  <div className="wax-seal-label">Sealed with honour</div>
+                </div>
                 <p className="form-note">— Address your missive below and it shall be received with gratitude —</p>
                 <form onSubmit={doSubmit}>
                   <div className="qfield"><label className="qlabel">Your Name</label><input className="qinput" type="text" name="name" placeholder="Enter your full name..." required /></div>
