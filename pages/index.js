@@ -167,11 +167,19 @@ export default function BookPortfolio() {
   const [secretTapCount, setSecretTapCount] = useState(0)        // mobile konami: tap logo 7x
   const secretTapTimer = useRef(null)
 
-  // Konami code: ↑↑↓↓←→←→BA
-  const konamiSeq = useRef([])
+  // ===== ALL REFS — declared before any useCallback to avoid SSR issues =====
+  const rightScrollRef     = useRef(null)
+  const leafRef            = useRef(null)
+  const flipping           = useRef(false)
+  const audioCtx           = useRef(null)
+  const canvasRef          = useRef(null)
+  const particlesRef       = useRef([])
+  const cursorDotRef       = useRef(null)
+  const cursorRingRef      = useRef(null)
+  const konamiSeq          = useRef([])
   const konamiParticlesRef = useRef([])
-  const konamiCanvasRef = useRef(null)
-  const konamiAnimRef = useRef(null)
+  const konamiCanvasRef    = useRef(null)
+  const konamiAnimRef      = useRef(null)
 
   const fireKonamiParticles = useCallback(() => {
     const canvas = konamiCanvasRef.current
@@ -339,13 +347,6 @@ export default function BookPortfolio() {
     setSelectedProject(idx)
     setTimeout(() => { if (rightScrollRef.current) rightScrollRef.current.scrollTop = 0 }, 50)
   }, [])
-  const leafRef        = useRef(null)
-  const flipping       = useRef(false)
-  const audioCtx       = useRef(null)
-  const canvasRef      = useRef(null)
-  const particlesRef   = useRef([])
-  const cursorDotRef   = useRef(null)
-  const cursorRingRef  = useRef(null)
 
   const trigCounters = useCallback(() => {
     setTimeout(() => {
