@@ -892,6 +892,22 @@ body { font-family: var(--serif); cursor: default; }
 #book-scene.dark-mode .travel-dest { color: rgba(210,185,140,.75); }
 #book-scene.dark-mode .travel-year { color: rgba(139,105,20,.5); }
 
+/* Travel image skeleton shimmer while loading */
+.travel-card-inner img {
+  background: linear-gradient(90deg, var(--paper3) 25%, var(--paper2) 50%, var(--paper3) 75%);
+  background-size: 200% 100%;
+  animation: skelShimmer 1.4s ease-in-out infinite;
+}
+.travel-card-inner img[src] {
+  animation: skelShimmer 1.4s ease-in-out infinite, none;
+}
+@keyframes skelShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+/* Once image loads, kill skeleton */
+.travel-card-inner img.loaded { animation: none; background: none; }
+
 /* ===== CUSTOM CURSOR (quill pen) ===== */
 @media (pointer: fine) {
   body { cursor: none; }
