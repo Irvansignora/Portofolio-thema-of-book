@@ -213,7 +213,124 @@ body { font-family: var(--serif); cursor: default; }
 }
 .flip-quote-text::before { content: '\201C'; font-family: var(--fraktur); font-size: 2rem; color: rgba(181,137,15,.4); line-height: 0; vertical-align: -.5rem; margin-right: .15rem; }
 .flip-quote-text::after  { content: '\201D'; font-family: var(--fraktur); font-size: 2rem; color: rgba(181,137,15,.4); line-height: 0; vertical-align: -.5rem; margin-left: .15rem; }
-/* ===== KONAMI EASTER EGG — Gold Aura Mode ===== */
+/* ===== CAREER TIMELINE ===== */
+.career-timeline {
+  position: relative;
+  padding: .5rem 0 1rem;
+  margin-bottom: .5rem;
+}
+
+/* Vertical spine */
+.tl-spine {
+  position: absolute;
+  left: 50%; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, rgba(181,137,15,.4) 10%, rgba(181,137,15,.4) 90%, transparent 100%);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.tl-entry {
+  display: grid;
+  grid-template-columns: 1fr 18px 1fr;
+  align-items: start;
+  gap: 0 12px;
+  margin-bottom: 1.4rem;
+  position: relative;
+}
+
+/* Node dot on spine */
+.tl-node {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--paper);
+  box-shadow: 0 0 0 2px rgba(181,137,15,.4), 0 0 8px rgba(212,168,32,.4);
+  margin-top: .8rem;
+  position: relative; z-index: 2;
+  justify-self: center;
+  transition: box-shadow .3s;
+}
+.tl-entry:hover .tl-node {
+  box-shadow: 0 0 0 3px rgba(181,137,15,.5), 0 0 16px rgba(212,168,32,.6);
+  background: var(--gold2);
+}
+
+/* Year badge — sits above node */
+.tl-year-badge {
+  font-family: var(--display);
+  font-size: .42rem; letter-spacing: .2em;
+  color: rgba(181,137,15,.7);
+  text-align: center;
+  grid-column: 2;
+  grid-row: 1;
+  margin-bottom: .3rem;
+  white-space: nowrap;
+}
+
+/* Card — alternates left/right */
+.tl-card {
+  background: rgba(181,137,15,.04);
+  border: 1px solid rgba(181,137,15,.18);
+  border-radius: 1px;
+  padding: .7rem .8rem;
+  transition: border-color .25s, background .25s, transform .25s;
+  position: relative;
+}
+.tl-card:hover {
+  border-color: rgba(181,137,15,.45);
+  background: rgba(181,137,15,.08);
+  transform: translateY(-1px);
+}
+
+/* Connector arrow pointing to spine */
+.tl-card::before {
+  content: '';
+  position: absolute; top: .85rem;
+  width: 10px; height: 1px;
+  background: rgba(181,137,15,.35);
+}
+
+/* Left side card — occupies col 1, arrow points right */
+.tl-left { grid-template-rows: auto; }
+.tl-left .tl-card   { grid-column: 1; grid-row: 1; text-align: right; }
+.tl-left .tl-node   { grid-column: 2; grid-row: 1; align-self: center; margin-top: .7rem; }
+.tl-left .tl-year-badge { grid-column: 2; grid-row: 1; align-self: start; }
+.tl-left .tl-card   { grid-row: 1; }
+.tl-left .tl-card::before { right: -10px; }
+.tl-left .porto-tech { justify-content: flex-end; }
+.tl-left .porto-links { justify-content: flex-end; }
+
+/* Right side card — occupies col 3, arrow points left */
+.tl-right .tl-card  { grid-column: 3; grid-row: 1; }
+.tl-right .tl-node  { grid-column: 2; grid-row: 1; align-self: center; margin-top: .7rem; }
+.tl-right .tl-year-badge { grid-column: 2; grid-row: 1; align-self: start; }
+.tl-right .tl-card::before { left: -10px; }
+
+.tl-card-header { display: flex; align-items: center; gap: .4rem; margin-bottom: .3rem; flex-wrap: wrap; }
+.tl-left .tl-card-header { justify-content: flex-end; }
+
+/* Mobile — collapse to single column */
+@media (max-width: 700px) {
+  .tl-spine { left: 12px; }
+  .tl-entry { grid-template-columns: 18px 1fr; gap: 0 8px; }
+  .tl-left .tl-card,
+  .tl-right .tl-card { grid-column: 2; grid-row: 1; text-align: left; }
+  .tl-left .tl-node,
+  .tl-right .tl-node { grid-column: 1; }
+  .tl-left .tl-year-badge,
+  .tl-right .tl-year-badge { grid-column: 1; font-size: .35rem; writing-mode: vertical-rl; }
+  .tl-left .tl-card::before,
+  .tl-right .tl-card::before { left: -8px; right: auto; }
+  .tl-left .porto-tech,
+  .tl-left .porto-links { justify-content: flex-start; }
+  .tl-left .tl-card-header { justify-content: flex-start; }
+  .tl-left .tl-card { text-align: left; }
+}
+
+/* Dark mode timeline */
+#book-scene.dark-mode .tl-card { background: rgba(181,137,15,.06); border-color: rgba(181,137,15,.15); }
+#book-scene.dark-mode .tl-card:hover { background: rgba(181,137,15,.12); border-color: rgba(181,137,15,.4); }
+#book-scene.dark-mode .tl-node { border-color: rgba(26,18,8,1); }
 @keyframes konamiGlow {
   0%,100% { box-shadow: 0 0 0 rgba(212,168,32,0), inset 0 0 0 rgba(212,168,32,0); }
   50%      { box-shadow: 0 0 80px rgba(212,168,32,.4), 0 0 200px rgba(212,168,32,.15); }
