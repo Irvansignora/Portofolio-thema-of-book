@@ -706,6 +706,11 @@ body { font-family: var(--serif); cursor: default; }
   padding: 2.8rem 3rem 2rem 2.8rem;
   scrollbar-width: thin;
   scrollbar-color: rgba(181,137,15,.3) transparent;
+  transition: opacity .3s ease;
+}
+.right-inner.section-hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 .right-inner::-webkit-scrollbar { width: 4px; }
 .right-inner::-webkit-scrollbar-track { background: transparent; }
