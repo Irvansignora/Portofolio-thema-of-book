@@ -782,7 +782,7 @@ export default function BookPortfolio() {
     <>
       <Head>
         <title>Muhamad Irpan Yasin — Sales · Finance · Data Analysis Portfolio</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <style>{`
 
           /* ====================================================
@@ -1669,10 +1669,10 @@ export default function BookPortfolio() {
                 </div>
                 <p className="form-note">— Address your missive below and it shall be received with gratitude —</p>
                 <form onSubmit={doSubmit}>
-                  <div className="qfield"><label className="qlabel">Your Name</label><input className="qinput" type="text" name="name" placeholder="Enter your full name..." required /></div>
-                  <div className="qfield"><label className="qlabel">Your Email</label><input className="qinput" type="email" name="email" placeholder="your@email.com" required /></div>
-                  <div className="qfield"><label className="qlabel">Subject</label><input className="qinput" type="text" name="subject" placeholder="The nature of your enquiry..." required /></div>
-                  <div className="qfield"><label className="qlabel">Your Message</label><textarea className="qtextarea" name="message" placeholder="Compose your letter here..." required /></div>
+                  <div className="qfield"><label className="qlabel" htmlFor="contact-name">Your Name</label><input id="contact-name" className="qinput" type="text" name="name" placeholder="Enter your full name..." required /></div>
+                  <div className="qfield"><label className="qlabel" htmlFor="contact-email">Your Email</label><input id="contact-email" className="qinput" type="email" name="email" placeholder="your@email.com" required /></div>
+                  <div className="qfield"><label className="qlabel" htmlFor="contact-subject">Subject</label><input id="contact-subject" className="qinput" type="text" name="subject" placeholder="The nature of your enquiry..." required /></div>
+                  <div className="qfield"><label className="qlabel" htmlFor="contact-message">Your Message</label><textarea id="contact-message" className="qtextarea" name="message" placeholder="Compose your letter here..." required /></div>
                   <button className="qsubmit" type="submit" disabled={formSending}
                     style={formSent?{background:'#4a7a3a'}:formError?{background:'#7a2a2a'}:formSending?{opacity:.6,cursor:'wait'}:{}}>
                     {formSending?'⟳ Dispatching…':formSent?'✓ Letter Dispatched!':formError?'✕ Failed — Try Again':'Dispatch Letter →'}
@@ -1750,11 +1750,13 @@ export default function BookPortfolio() {
               </a>
               <div style={{display:'flex',gap:'.4rem',marginTop:'.2rem'}}>
                 <button
+                  aria-label={soundOn ? 'Mute sound' : 'Enable sound'}
                   onClick={() => { setSoundOn(s=>!s) }}
                   style={{flex:1,display:'flex',alignItems:'center',justifyContent:'center',gap:'.4rem',padding:'.4rem',border:'1px solid rgba(181,137,15,.2)',color:'rgba(181,137,15,.6)',fontFamily:'var(--display)',fontSize:'.38rem',letterSpacing:'.1em',background:'rgba(181,137,15,.04)',cursor:'pointer',textTransform:'uppercase'}}>
                   {soundOn ? '🔊 Sound' : '🔇 Sound'}
                 </button>
                 <button
+                  aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
                   onClick={() => { const goingDark = !darkMode; setDarkTransition(goingDark ? 'todark' : 'tolight'); setTimeout(() => { setDarkMode(goingDark); setDarkTransition(null) }, 420) }}
                   style={{flex:1,display:'flex',alignItems:'center',justifyContent:'center',gap:'.4rem',padding:'.4rem',border:'1px solid rgba(181,137,15,.2)',color:'rgba(181,137,15,.6)',fontFamily:'var(--display)',fontSize:'.38rem',letterSpacing:'.1em',background:'rgba(181,137,15,.04)',cursor:'pointer',textTransform:'uppercase'}}>
                   {darkMode ? '☀️ Light' : '🌙 Dark'}
@@ -1816,7 +1818,7 @@ export default function BookPortfolio() {
       {/* Toolbar — collapsible floating panel */}
       <div className="toolbar-panel">
         <div className={`toolbar-items${toolbarOpen?' open':''}`}>
-          <button onClick={() => setSoundOn(s=>!s)} className={`toolbar-btn${soundOn?' active':''}`}>
+          <button aria-label={soundOn ? 'Mute sound' : 'Enable sound'} onClick={() => setSoundOn(s=>!s)} className={`toolbar-btn${soundOn?' active':''}`}>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
               {soundOn
                 ? <><path d="M1 5.5h3l4-3v11l-4-3H1z"/><path d="M11 4a5 5 0 0 1 0 8M13 2a8 8 0 0 1 0 12"/></>
@@ -1825,7 +1827,7 @@ export default function BookPortfolio() {
             </svg>
             {soundOn ? 'Sound On' : 'Sound Off'}
           </button>
-          <button onClick={() => {
+          <button aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'} onClick={() => {
             const goingDark = !darkMode
             setDarkTransition(goingDark ? 'todark' : 'tolight')
             setTimeout(() => { setDarkMode(goingDark); setDarkTransition(null) }, 420)
@@ -1838,14 +1840,14 @@ export default function BookPortfolio() {
             </svg>
             {darkMode ? 'Night Ink' : 'Day Parchment'}
           </button>
-          <a href="/cv.pdf" download="CV-Muhamad-Irpan-Yasin.pdf" className="toolbar-btn" style={{textDecoration:'none'}}>
+          <a href="/cv.pdf" download="CV-Muhamad-Irpan-Yasin.pdf" aria-label="Download CV" className="toolbar-btn" style={{textDecoration:'none'}}>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M4 1h6l3 3v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/><path d="M9 1v4h3M8 7v5m-2-2 2 2 2-2"/>
             </svg>
             Get CV
           </a>
-          <a href="https://www.linkedin.com/in/muhamad-irpan-yasin" target="_blank" rel="noopener" className="toolbar-btn" style={{textDecoration:'none'}}>
-            <svg viewBox="0 0 16 16" fill="currentColor">
+          <a href="https://www.linkedin.com/in/muhamad-irpan-yasin" target="_blank" rel="noopener" aria-label="Visit LinkedIn profile" className="toolbar-btn" style={{textDecoration:'none'}}>
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
               <path d="M13 1H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM5.5 12H4V6.5h1.5V12zM4.75 5.75a.875.875 0 1 1 0-1.75.875.875 0 0 1 0 1.75zM12 12h-1.5V9.2c0-.7-.56-1.2-1.25-1.2S8 8.5 8 9.2V12H6.5V6.5H8v.72A2.24 2.24 0 0 1 9.75 6.5C11.02 6.5 12 7.48 12 8.75V12z"/>
             </svg>
             LinkedIn
@@ -1904,12 +1906,12 @@ export default function BookPortfolio() {
             </>
           )}
           <div className="lb-ctrl">
-            <button className="lb-b" onClick={() => setLbIdx(i=>(i-1+lbImgs.length)%lbImgs.length)}>
+            <button className="lb-b" aria-label="Previous image" onClick={() => setLbIdx(i=>(i-1+lbImgs.length)%lbImgs.length)}>
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M7 1 3 5l4 4"/></svg>
               Prev
             </button>
             <span className="lb-cnt">{lbIdx+1} / {lbImgs.length}</span>
-            <button className="lb-b" onClick={() => setLbIdx(i=>(i+1)%lbImgs.length)}>
+            <button className="lb-b" aria-label="Next image" onClick={() => setLbIdx(i=>(i+1)%lbImgs.length)}>
               Next
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 1 7 5 3 9"/></svg>
             </button>
