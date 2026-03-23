@@ -15,23 +15,5 @@ const nextConfig = {
   },
   compress: true,
   poweredByHeader: false,
-  async headers() {
-    return [
-      {
-        // Static assets — cache 1 year
-        source: '/:all*(jpg|jpeg|png|webp|avif|svg|ico|woff|woff2)',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
-      {
-        // HTML pages — revalidate
-        source: '/(.*)',
-        headers: [
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-        ],
-      },
-    ]
-  },
 }
 module.exports = nextConfig
