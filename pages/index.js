@@ -194,9 +194,11 @@ export default function BookPortfolio() {
     if (!canvas) return
     // Spawn from spine area — roughly center-left of viewport
     const bookEl = document.getElementById('book')
-    const spineX = bookEl ? bookEl.getBoundingClientRect().left + 28 : window.innerWidth * 0.28
-    const bookTop = bookEl ? bookEl.getBoundingClientRect().top : window.innerHeight * 0.1
-    const bookH   = bookEl ? bookEl.getBoundingClientRect().height : window.innerHeight * 0.8
+    // Batch all getBoundingClientRect reads together — prevents forced layout reflow
+    const bookRect = bookEl ? bookEl.getBoundingClientRect() : null
+    const spineX = bookRect ? bookRect.left + 28 : window.innerWidth * 0.28
+    const bookTop = bookRect ? bookRect.top : window.innerHeight * 0.1
+    const bookH   = bookRect ? bookRect.height : window.innerHeight * 0.8
     const DUST_COLORS = ['rgba(196,152,30,.7)','rgba(220,180,80,.5)','rgba(244,234,213,.4)','rgba(160,120,20,.6)']
     for (let i = 0; i < 22; i++) {
       const y = bookTop + Math.random() * bookH
@@ -586,6 +588,8 @@ export default function BookPortfolio() {
 
   
   useEffect(() => {
+    // Skip heavy canvas animation on mobile — major perf win
+    if (typeof window !== 'undefined' && window.innerWidth <= 700) return
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -698,8 +702,9 @@ export default function BookPortfolio() {
 
   useEffect(() => { trigCounters() }, [trigCounters])
 
-  // Custom cursor tracking
+  // Custom cursor tracking — desktop only (mobile has no cursor)
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth <= 700) return
     const dot  = cursorDotRef.current
     const ring = cursorRingRef.current
     if (!dot || !ring) return
@@ -709,14 +714,13 @@ export default function BookPortfolio() {
 
     const onMove = (e) => {
       mx = e.clientX; my = e.clientY
-      dot.style.left  = mx + 'px'
-      dot.style.top   = my + 'px'
+      // Use transform instead of left/top — avoids layout reflow, composited by GPU
+      dot.style.transform = `translate(${mx}px, ${my}px)`
     }
     const animate = () => {
       rx += (mx - rx) * 0.12
       ry += (my - ry) * 0.12
-      ring.style.left = rx + 'px'
-      ring.style.top  = ry + 'px'
+      ring.style.transform = `translate(${rx}px, ${ry}px)`
       raf = requestAnimationFrame(animate)
     }
     const onEnter = () => { dot.classList.add('hovering'); ring.classList.add('hovering') }
