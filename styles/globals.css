@@ -1465,24 +1465,24 @@ body { font-family: var(--serif); cursor: default; }
   body { cursor: none; }
 
   .cursor-dot {
-    position: fixed; top: 0; left: 0;
+    position: fixed; top: -4px; left: -4px;
     width: 8px; height: 8px; border-radius: 50%;
     background: var(--gold2);
     pointer-events: none; z-index: 99999;
-    transform: translate(-50%, -50%);
-    transition: transform .1s, opacity .2s, background .2s;
+    will-change: transform;
+    transition: opacity .2s, background .2s, scale .1s;
     box-shadow: 0 0 6px rgba(212,168,32,.6);
   }
   .cursor-ring {
-    position: fixed; top: 0; left: 0;
+    position: fixed; top: -14px; left: -14px;
     width: 28px; height: 28px; border-radius: 50%;
     border: 1px solid rgba(181,137,15,.5);
     pointer-events: none; z-index: 99998;
-    transform: translate(-50%, -50%);
-    transition: transform .18s cubic-bezier(.16,1,.3,1), width .2s, height .2s, opacity .2s;
+    will-change: transform;
+    transition: width .2s, height .2s, opacity .2s, top .2s, left .2s;
   }
-  .cursor-dot.hovering  { transform: translate(-50%,-50%) scale(2.5); background: var(--red); }
-  .cursor-ring.hovering { width: 44px; height: 44px; border-color: rgba(155,28,28,.5); }
+  .cursor-dot.hovering  { scale: 2.5; background: var(--red); }
+  .cursor-ring.hovering { width: 44px; height: 44px; top: -22px; left: -22px; border-color: rgba(155,28,28,.5); }
 }
 
 /* ===== MOBILE RESPONSIVE — Full Overhaul ===== */
@@ -1632,6 +1632,13 @@ body { font-family: var(--serif); cursor: default; }
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+
+  /* Hide canvas particle & custom cursor on mobile — not needed on touch */
+  canvas { display: none !important; }
+  .cursor-dot, .cursor-ring { display: none !important; }
+
+  /* Faster tap response on mobile */
+  a, button, [role="button"] { touch-action: manipulation; }
 
   /* Kill GPU acceleration hints on mobile — saves memory, reduces jank */
   .flip-leaf, #book, #page-right, .right-inner, .content-section {
