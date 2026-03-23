@@ -7,6 +7,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 /* Force GPU compositing on elements that animate */
 /* GPU compositing — only on elements that actively animate */
@@ -1651,6 +1653,11 @@ body { font-family: var(--serif); cursor: default; }
   #book-scene::before { animation: none !important; }
   .intro-curtain::after { animation: none !important; opacity: .8; }
   .intro-hint { animation: introPulse 2.5s ease-in-out 1.2s infinite; }
+  .intro-scroll-arrow { animation: none !important; opacity: .65; }
+  .intro-scroll-dot { animation: none !important; }
+  .scene-candle { animation: none !important; opacity: .6; }
+  /* Kill all infinite animations in intro — one-shot reveals are fine */
+  .intro-open-label { animation: none !important; opacity: .55; }
 
   /* Reduce motion for users who prefer it */
   @media (prefers-reduced-motion: reduce) {
@@ -1665,6 +1672,9 @@ body { font-family: var(--serif); cursor: default; }
   .content-section:not(.active) {
     content-visibility: hidden;
   }
+
+  /* ---- image-rendering hint for low-res mobile screens ---- */
+  img { image-rendering: auto; }
 
   /* ---- SCROLL INDICATOR ---- */
   /* Move scroll hint from right to bottom center on mobile */
