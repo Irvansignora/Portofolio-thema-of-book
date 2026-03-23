@@ -1,6 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 
-
 const BASE_URL = 'https://irvansignora.vercel.app/'
 
 const jsonLd = {
@@ -17,9 +16,7 @@ const jsonLd = {
     addressRegion: 'West Java',
     addressCountry: 'ID',
   },
-  sameAs: [
-    'https://www.linkedin.com/in/muhamad-irpan-yasin',
-  ],
+  sameAs: ['https://www.linkedin.com/in/muhamad-irpan-yasin'],
   knowsAbout: ['Sales Management','Tax Management','Data Analysis','Administration','Business Development'],
 }
 
@@ -34,7 +31,7 @@ export default function Document() {
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={BASE_URL} />
 
-        {/* ===== OPEN GRAPH (LinkedIn, WhatsApp, Facebook) ===== */}
+        {/* ===== OPEN GRAPH ===== */}
         <meta property="og:type"        content="website" />
         <meta property="og:url"         content={BASE_URL} />
         <meta property="og:locale"      content="en_US" />
@@ -56,32 +53,13 @@ export default function Document() {
         {/* ===== FAVICON & THEME ===== */}
         <meta name="theme-color" content="#1a0f05" />
         <link rel="shortcut icon"    href="/logo.png" />
-        <link rel="icon"             href="/logo.png" type="image/png" sizes="32x32" />
+        <link rel="icon"             href="/logo.png" type="image/png" sizes="256x256" />
         <link rel="apple-touch-icon" href="/logo.png" />
 
-        {/* ===== LCP IMAGE PRELOAD ===== */}
-        <link rel="preload" as="image" href="/irvan.jpg" fetchPriority="high" />
-
-        {/* ===== DNS PREFETCH — third party domains ===== */}
+        {/* ===== DNS PREFETCH for third-party media (Cloudinary images load lazily) ===== */}
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://flagcdn.com" />
-
-        {/* ===== FONTS ===== */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=UnifrakturMaguntia&display=swap"
-          rel="stylesheet"
-          media="print"
-          onLoad="this.media='all'"
-        />
-        <noscript>
-          <link
-            href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=UnifrakturMaguntia&display=swap"
-            rel="stylesheet"
-          />
-        </noscript>
+        {/* Note: fonts are now self-hosted via next/font — no Google Fonts preconnect needed */}
 
         {/* ===== STRUCTURED DATA (JSON-LD) ===== */}
         <script
