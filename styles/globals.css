@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=UnifrakturMaguntia&display=swap');
+/* Font loaded via <link rel="preload"> in _document.js — no @import needed */
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1636,6 +1636,27 @@ body { font-family: var(--serif); cursor: default; }
   /* Kill GPU acceleration hints on mobile — saves memory, reduces jank */
   .flip-leaf, #book, #page-right, .right-inner, .content-section {
     will-change: auto !important;
+  }
+
+  /* ---- KILL HEAVY ANIMATIONS ON MOBILE ---- */
+  /* Glow/flicker animations are expensive on mobile GPUs */
+  .intro-monogram { animation: none !important; }
+  #book-scene::before { animation: none !important; }
+  .intro-curtain::after { animation: none !important; opacity: .8; }
+  .intro-hint { animation: introPulse 2.5s ease-in-out 1.2s infinite; }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ---- CONTENT VISIBILITY — skip rendering off-screen sections ---- */
+  .content-section:not(.active) {
+    content-visibility: hidden;
   }
 
   /* ---- SCROLL INDICATOR ---- */
