@@ -1304,7 +1304,7 @@ export default function BookPortfolio() {
                     )}
                   </div>
                   <div className="profile-portrait">
-                    <img src="/irvan.jpg" alt="Muhamad Irpan Yasin" onError={e => e.target.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=260&fit=crop&q=80&grayscale'} />
+                    <img src="/irvan.jpg" alt="Muhamad Irpan Yasin" width="300" height="533" loading="eager" fetchPriority="high" decoding="async" onError={e => e.target.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=260&fit=crop&q=80&grayscale'} />
                     <div className="portrait-caption">Muhamad Irpan Yasin<br/>Bandung, West Java<br/><em>Indonesia</em></div>
                     <div className="portrait-socials">
                       <a href="https://www.linkedin.com/in/muhamad-irpan-yasin" target="_blank" rel="noopener" className="psoc-link" title="LinkedIn">in</a>
