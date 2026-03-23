@@ -34,10 +34,10 @@ body {
   --gold:   #b5890f;
   --gold2:  #d4a820;
   --spine:  #1e1204;
-  --serif:  'Crimson Text', serif;
-  --display:'Cinzel', serif;
-  --fell:   'IM Fell English', serif;
-  --fraktur:'UnifrakturMaguntia', cursive;
+  --serif:  var(--font-serif, 'Crimson Text'), serif;
+  --display:var(--font-display, 'Cinzel'), serif;
+  --fell:   var(--font-fell, 'IM Fell English'), serif;
+  --fraktur:var(--font-fraktur, 'UnifrakturMaguntia'), cursive;
 }
 
 html, body { height: 100%; overflow: hidden; background: #1a0f05; }
