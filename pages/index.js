@@ -1,4 +1,4 @@
-import Head from 'next/head'
+]import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useRef, useState, useCallback } from 'react'
 
@@ -127,12 +127,12 @@ const PROJECTS_DATA = [
   },
   {
     num:'§ VI', tag:'E-Commerce & POS', title:'Online Store & POS System',
-    subtitle:'Full-Featured Digital Commerce Solutions',
-    desc:'Full-featured digital commerce solutions — from a fresh grocery e-commerce store with cart & checkout, to a coffee shop POS system with real-time transaction flow. Two complete systems built for real business use.',
-    story:'Two separate projects with a shared goal: making commerce digital, smooth, and reliable. The grocery store focuses on customer experience; the POS system on operational efficiency for staff.',
-    tech:['Next.js','Tailwind CSS','Vercel','Context API'],
-    links:[{href:'https://ecommerce-freshmarket.vercel.app/',label:'→ FreshMarket Store'},{href:'https://demo-coffee-shop-v2.vercel.app/',label:'→ Coffee Shop POS'}],
-    highlights:['Full cart & checkout flow','Real-time POS transactions','Inventory management','Clean, professional UI'],
+    subtitle:'Full-Featured Digital Commerce Solutions for UMKM',
+    desc:'Full-featured digital commerce solutions built for all kinds of small businesses — food & beverage, fashion, accessories, skincare, grocery, handmade products, and services. From a complete online store with cart & checkout, to a snack distributor website, and a fully offline POS system for daily cashier operations.',
+    story:'Three separate projects with a shared goal: making small business commerce digital, smooth, and reliable. The online store serves any UMKM needing a customer-facing storefront; the distributor site showcases wholesale products; the offline POS keeps operations running without internet.',
+    tech:['Next.js','Tailwind CSS','Vercel','Context API','HTML','CSS','JavaScript'],
+    links:[{href:'https://hulyaapparel.com',label:'→ Hulya Apparel (UMKM)'},{href:'https://distributor-snack.vercel.app/',label:'→ Website Distributor Snack'},{href:'https://irvansignora.github.io/Kasir-Offline/',label:'→ POS Offline Kasir'}],
+    highlights:['Full cart & checkout flow (Hulya Apparel)','Distributor product catalogue & order info','Offline POS — works without internet','Clean, professional UI for UMKM'],
     status:'Live & Deployed', year:'2024',
   },
 ]
