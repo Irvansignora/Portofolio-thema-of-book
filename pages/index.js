@@ -1,4 +1,4 @@
-]import Head from 'next/head'
+import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useRef, useState, useCallback } from 'react'
 
@@ -128,7 +128,7 @@ const PROJECTS_DATA = [
   {
     num:'§ VI', tag:'E-Commerce & POS', title:'Online Store & POS System',
     subtitle:'Full-Featured Digital Commerce Solutions for UMKM',
-    desc:'Full-featured digital commerce solutions built for all kinds of small businesses — food & beverage, fashion, accessories, skincare, grocery, handmade products, and services. From a complete online store with cart & checkout, to a snack distributor website, and a fully offline POS system for daily cashier operations.',
+    desc:'Full-featured digital commerce solutions built for all kinds of small businesses -- food & beverage, fashion, accessories, skincare, grocery, handmade products, and services. From a complete online store with cart & checkout, to a snack distributor website, and a fully offline POS system for daily cashier operations.',
     story:'Three separate projects with a shared goal: making small business commerce digital, smooth, and reliable. The online store serves any UMKM needing a customer-facing storefront; the distributor site showcases wholesale products; the offline POS keeps operations running without internet.',
     tech:['Next.js','Tailwind CSS','Vercel','Context API','HTML','CSS','JavaScript'],
     links:[{href:'https://hulyaapparel.com',label:'→ Hulya Apparel (UMKM)'},{href:'https://distributor-snack.vercel.app/',label:'→ Website Distributor Snack'},{href:'https://irvansignora.github.io/Kasir-Offline/',label:'→ POS Offline Kasir'}],
