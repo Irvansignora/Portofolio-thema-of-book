@@ -2005,3 +2005,27 @@ body { font-family: var(--serif); cursor: default; }
   .proj-preview-iframe { height: 360px; transform: scale(0.30) translateY(-52%); width: 333%; }
   .proj-preview-thumbnail { margin: .5rem 0 .8rem; }
 }
+
+/* ===== EASTER EGG QUIZ CONFETTI ===== */
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(25vh) rotate(180deg) scale(1.1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(50vh) rotate(360deg) scale(0.9);
+    opacity: 0.7;
+  }
+  75% {
+    transform: translateY(75vh) rotate(540deg) scale(0.8);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg) scale(0.5);
+    opacity: 0;
+  }
+}
