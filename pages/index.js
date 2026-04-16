@@ -34,6 +34,8 @@ const TRAVEL_PHOTOS = [
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772682267/20250607_114807_uyhff4.jpg', dest:'Pangradinan Mount, Indonesia',  year:'2025' },
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772682397/IMG_20230219_075958_n5lumv.jpg', dest:'Pari Island, Indonesia',     year:'2023' },
   { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772682547/20240505_091651_okt1ey.jpg', dest:'Dufan, Indonesia',      year:'2023' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1776319796/papandayan_qvhyfs.jpg', dest:'Papandayan Mount, Indonesia',      year:'2026' },
+  { src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1776319803/papandayan-3_qagw8v.jpg', dest:'Papandayan Mount, Indonesia',      year:'2026' },
 ]
 
 
@@ -135,6 +137,65 @@ const PROJECTS_DATA = [
     highlights:['Full cart & checkout flow (Hulya Apparel)','Distributor product catalogue & order info','Offline POS — works without internet','Clean, professional UI for UMKM'],
     status:'Live & Deployed', year:'2024',
   },
+  {
+    num:'§ VII', tag:'Tax Automation Suite', title:'PajakTools',
+    subtitle:'Suite Lengkap Alat Pajak Indonesia — All-in-One Tax Platform',
+    desc:'A comprehensive Indonesian tax automation platform that streamlines the entire tax workflow. Features include PDF-to-Excel converter for Faktur Pajak, Excel-to-XML generator for Coretax (PPh 21, PPh 23, PPh 4(2), PPN), bulk PDF renaming with metadata extraction, and a smart tax calculator — all running 100% client-side with zero data upload.',
+    story:'Born from daily frustrations in tax administration — manually re-typing Faktur Pajak data, formatting XML imports, and renaming hundreds of PDF documents. This suite was built to automate the repetitive, error-prone tasks that tax professionals deal with every single day. Privacy-first architecture means no data ever leaves the browser.',
+    tech:['HTML5','JavaScript','SheetJS','JSZip','PDF.js','CSS3','Client-Side Processing'],
+    links:[{href:'https://tools-pajak.iranza.com/',label:'→ Visit PajakTools'}],
+    highlights:['PDF Faktur → Excel conversion with auto metadata extraction','Excel → Coretax XML generator (PPh 21, 23, 4(2), PPN)','Bulk PDF rename with pattern-based naming','Smart tax calculator with multiple tax types','100% client-side — no data uploaded, full privacy','Template download & validation system'],
+    status:'Live & Deployed', year:'2025',
+  },
+  {
+    num:'§ VIII', tag:'Excel Productivity Suite', title:'ExcelKit Pro',
+    subtitle:'7 Powerful Excel Tools in One Elegant Interface',
+    desc:'A professional-grade Excel toolkit featuring 7 specialised tools: Excel Cleaner (remove empty rows), Convert & Merger (XLSX↔CSV, multi-file merge), Splitter Buku Besar (split accounting ledger by account number), Duplikat Remover, Column Mapper (reorder & rename columns), Formula Library (60+ Excel formulas), and Data Formatter (bulk format numbers, dates, text).',
+    story:'Designed for accountants, finance teams, and data analysts who frequently wrestle with messy spreadsheets. Each tool was built to solve one specific pain point — from cleaning imported data to splitting massive general ledger files into per-account sheets. The warm, book-inspired UI makes even heavy data work feel pleasant.',
+    tech:['HTML5','JavaScript','SheetJS','JSZip','FileSaver.js','CSS3'],
+    links:[{href:'https://tools-excel.iranza.com/',label:'→ Visit ExcelKit Pro'}],
+    highlights:['7 tools in one unified interface','Excel Cleaner with auto-compression','Buku Besar splitter for Accurate & ND formats','Column Mapper with drag-reorder & rename','60+ Excel formula reference library','All processing in-browser — zero server dependency'],
+    status:'Live & Deployed', year:'2025',
+  },
+  {
+    num:'§ IX', tag:'PDF Toolkit', title:'PDF Tools Pro',
+    subtitle:'25+ PDF Tools — Merge, Split, Edit, Convert & More',
+    desc:'A comprehensive browser-based PDF toolkit with 25+ tools: Merge PDF, Split PDF (by range, every N pages, one-by-one), Reorder Pages, Delete Pages, Extract Pages, Rename PDF, Image↔PDF conversion, Rotate, Page Numbers, Watermark, Metadata Editor, Compress, Password protection, Text Extraction, PDF Viewer, Form Filler, Stamp, Digital Signature, Redact/Sensor, Header & Footer, Insert Pages, Duplicate Pages, and Crop.',
+    story:'Every office worker and small business owner deals with PDFs constantly — merging invoices, splitting contracts, adding watermarks, redacting sensitive data. This toolkit was built to eliminate the need for expensive desktop software or risky online converters. Every operation happens locally in the browser, ensuring complete document privacy.',
+    tech:['HTML5','JavaScript','PDF-lib','PDF.js','JSZip','Canvas API','CSS3'],
+    links:[{href:'https://tools-pdf.iranza.com/',label:'→ Visit PDF Tools Pro'}],
+    highlights:['25+ PDF tools in one platform','Merge, Split, Reorder, Delete, Extract pages','Digital Signature & Stamp support','Watermark, Header/Footer, Page Numbers','Password protection & Redact/Sensor','PDF Viewer, Form Filler & Metadata Editor','100% browser-based — documents never leave your device'],
+    status:'Live & Deployed', year:'2025',
+  },
+  {
+    num:'§ X', tag:'SaaS Platform', title:'WorkForce HRM',
+    subtitle:'Cloud-Based Human Resource & Attendance Management System',
+    desc:'A full-featured SaaS HRM platform built for companies managing multi-branch operations. Features include GPS-based attendance with selfie verification, employee management with role-based access (Super Admin, Admin, Employee), attendance reports & analytics, internal announcement system, holiday calendar management, live attendance monitoring, and a modern PWA for mobile check-in/check-out.',
+    story:'Built for real-world HR needs — managing attendance across multiple office branches with varying schedules, holidays, and team structures. The GPS + selfie verification ensures accountability, while the real-time dashboard gives managers instant visibility into who\'s present, late, or absent. Designed as a production-ready SaaS with multi-tenant architecture.',
+    tech:['Next.js','Supabase','PostgreSQL','PWA','Tailwind CSS','GPS API','Camera API','Vercel'],
+    links:[{href:'https://hrm.iranza.com/',label:'→ Visit WorkForce HRM'}],
+    highlights:['GPS-based check-in/out with selfie verification','Multi-branch employee & role management','Real-time attendance monitoring dashboard','Internal announcements & holiday calendar','Comprehensive attendance reports & analytics','PWA — installable on mobile devices','Multi-tenant SaaS architecture'],
+    status:'Live & Deployed', year:'2025',
+  },
+]
+
+// ===== EASTER EGG QUIZ — random trivia questions =====
+const EASTER_EGG_QUIZ = [
+  { q: 'Bahasa pemrograman apa yang diciptakan dalam 10 hari?', choices: ['Python','JavaScript','Ruby','Go'], answer: 1 },
+  { q: 'Siapa pendiri Linux?', choices: ['Bill Gates','Steve Wozniak','Linus Torvalds','Dennis Ritchie'], answer: 2 },
+  { q: 'Apa kepanjangan dari HTML?', choices: ['Hyper Text Markup Language','High Tech Modern Language','Hyper Transfer Markup Language','Home Tool Markup Language'], answer: 0 },
+  { q: 'Dalam Excel, fungsi apa untuk mencari data secara vertikal?', choices: ['HLOOKUP','INDEX','VLOOKUP','SUMIF'], answer: 2 },
+  { q: 'Planet apa yang paling dekat dengan matahari?', choices: ['Venus','Mars','Merkurius','Bumi'], answer: 2 },
+  { q: 'Berapa jumlah provinsi di Indonesia (2025)?', choices: ['34','37','38','36'], answer: 2 },
+  { q: 'Apa nama gunung tertinggi di Indonesia?', choices: ['Rinjani','Semeru','Kerinci','Puncak Jaya'], answer: 3 },
+  { q: 'CSS singkatan dari apa?', choices: ['Creative Style Sheets','Cascading Style Sheets','Computer Style Sheets','Colorful Style Sheets'], answer: 1 },
+  { q: 'Tahun berapa Indonesia merdeka?', choices: ['1944','1945','1946','1947'], answer: 1 },
+  { q: 'HTTP status code 404 artinya apa?', choices: ['Server Error','Unauthorized','Not Found','Success'], answer: 2 },
+  { q: 'Apa ibu kota Jepang?', choices: ['Osaka','Kyoto','Tokyo','Nagoya'], answer: 2 },
+  { q: 'Framework JavaScript mana yang dibuat oleh Facebook?', choices: ['Angular','Vue.js','Svelte','React'], answer: 3 },
+  { q: 'Berapa hasil dari 2^10?', choices: ['512','1024','2048','256'], answer: 1 },
+  { q: 'Port default untuk HTTPS adalah?', choices: ['80','8080','443','3000'], answer: 2 },
+  { q: 'Tokoh fiksi "Sherlock Holmes" diciptakan oleh siapa?', choices: ['Agatha Christie','Arthur Conan Doyle','Edgar Allan Poe','Jules Verne'], answer: 1 },
 ]
 
 export default function BookPortfolio() {
@@ -172,6 +233,13 @@ export default function BookPortfolio() {
   const [secretTapCount, setSecretTapCount] = useState(0)        // mobile konami: tap logo 7x
   const [isMobile, setIsMobile] = useState(false)
   const secretTapTimer = useRef(null)
+
+  // Easter egg quiz states
+  const [quizActive, setQuizActive]       = useState(false)
+  const [quizQuestion, setQuizQuestion]   = useState(null)
+  const [quizSelected, setQuizSelected]   = useState(null) // index of selected answer
+  const [quizResult, setQuizResult]       = useState(null)  // 'correct' | 'wrong' | null
+  const [quizConfetti, setQuizConfetti]   = useState([])
 
   // ===== ALL REFS — declared before any useCallback to avoid SSR issues =====
   const rightScrollRef     = useRef(null)
@@ -353,7 +421,19 @@ export default function BookPortfolio() {
     setKonamiPhase(1)
     setTimeout(() => { fireKonamiParticles(); setKonamiPhase(2) }, 80)
     setTimeout(() => setKonamiPhase(3), 600)
-    setTimeout(() => { setKonamiActive(false); setKonamiPhase(0); cancelAnimationFrame(konamiAnimRef.current) }, 5500)
+    // After the reveal, show the quiz instead of auto-closing
+    setTimeout(() => {
+      setKonamiActive(false)
+      setKonamiPhase(0)
+      cancelAnimationFrame(konamiAnimRef.current)
+      // Pick a random quiz question
+      const q = EASTER_EGG_QUIZ[Math.floor(Math.random() * EASTER_EGG_QUIZ.length)]
+      setQuizQuestion(q)
+      setQuizSelected(null)
+      setQuizResult(null)
+      setQuizConfetti([])
+      setQuizActive(true)
+    }, 4200)
   }, [fireKonamiParticles])
 
   // Mobile secret: tap the MIY monogram 7 times quickly
@@ -2056,16 +2136,270 @@ export default function BookPortfolio() {
                 </div>
               )}
 
-              {/* Fade-out hint */}
+              {/* Fade-out hint — now mentions the upcoming quiz */}
               <div style={{
                 position:'absolute', bottom:'8%',
                 fontFamily:'var(--display)', fontSize:'.38rem', letterSpacing:'.2em',
                 color:'rgba(212,168,32,.3)', textTransform:'uppercase',
                 animation:'otwPulse 1.5s ease-in-out infinite',
-              }}>— Fading in a moment —</div>
+              }}>— A challenge awaits… —</div>
             </div>
           )}
         </>
+      )}
+
+      {/* ===== EASTER EGG QUIZ OVERLAY ===== */}
+      {quizActive && quizQuestion && (
+        <div style={{
+          position:'fixed', inset:0, zIndex:99995,
+          display:'flex', alignItems:'center', justifyContent:'center',
+          background:'radial-gradient(ellipse at 50% 50%, rgba(5,2,0,.92) 0%, rgba(5,2,0,.88) 60%, rgba(5,2,0,.7) 100%)',
+          animation:'konamiReveal .5s cubic-bezier(.16,1,.3,1) both',
+          flexDirection:'column',
+        }}>
+          {/* Confetti particles for correct answer */}
+          {quizConfetti.map((c, i) => (
+            <div key={i} style={{
+              position:'fixed', left:c.x, top:c.y,
+              width:c.size+'px', height:c.size+'px',
+              background:c.color,
+              borderRadius: c.shape === 'circle' ? '50%' : c.shape === 'star' ? '2px' : '0',
+              transform:`rotate(${c.rot}deg)`,
+              pointerEvents:'none', zIndex:99999,
+              animation:`confettiFall ${c.dur}s linear forwards`,
+              opacity: 0.9,
+            }}/>
+          ))}
+
+          {/* Ornamental borders */}
+          <div style={{position:'absolute', inset:'4%', border:'1px solid rgba(212,168,32,.15)', pointerEvents:'none'}}/>
+          <div style={{position:'absolute', inset:'4.5%', border:'1px solid rgba(212,168,32,.08)', pointerEvents:'none'}}/>
+
+          {/* Corner ornaments */}
+          {['topleft','topright','bottomleft','bottomright'].map(pos => (
+            <div key={pos} style={{
+              position:'absolute',
+              top: pos.includes('top') ? '4.5%' : 'auto',
+              bottom: pos.includes('bottom') ? '4.5%' : 'auto',
+              left: pos.includes('left') ? '4.5%' : 'auto',
+              right: pos.includes('right') ? '4.5%' : 'auto',
+              fontFamily:'var(--fraktur)', fontSize:'1rem',
+              color:'rgba(212,168,32,.3)', lineHeight:1,
+            }}>✦</div>
+          ))}
+
+          {quizResult === 'correct' ? (
+            /* ===== CORRECT ANSWER — EPIC SURPRISE ===== */
+            <div style={{
+              display:'flex', flexDirection:'column', alignItems:'center', gap:'1.2rem',
+              animation:'konamiText .6s cubic-bezier(.16,1,.3,1) both',
+              maxWidth:'500px', padding:'0 1.5rem', textAlign:'center',
+            }}>
+              {/* Trophy animation */}
+              <div style={{
+                fontSize:'4rem', animation:'konamiBadge .8s cubic-bezier(.34,1.56,.64,1) both',
+                filter:'drop-shadow(0 0 30px rgba(212,168,32,.8))',
+              }}>🏆</div>
+              <div style={{
+                fontFamily:'var(--fraktur)', fontSize:'clamp(1.8rem,5vw,3.2rem)',
+                color:'var(--gold2)', lineHeight:1.1,
+                textShadow:'0 0 40px rgba(212,168,32,.9), 0 0 80px rgba(212,168,32,.4)',
+              }}>✦ Magnificent! ✦</div>
+              <div style={{
+                fontFamily:'var(--display)', fontSize:'.5rem', letterSpacing:'.35em',
+                color:'rgba(212,168,32,.7)', textTransform:'uppercase',
+              }}>The Scholar of Hidden Knowledge</div>
+
+              {/* Grand wax seal reward */}
+              <div style={{
+                width:'110px', height:'110px', borderRadius:'50%', margin:'.5rem 0',
+                background:'radial-gradient(ellipse at 35% 35%, #d4a820 0%, #b5890f 40%, #7a5800 80%)',
+                border:'4px solid rgba(244,234,213,.6)',
+                boxShadow:'0 0 0 8px rgba(212,168,32,.2), 0 0 50px rgba(212,168,32,.6), 0 0 100px rgba(212,168,32,.3), inset 0 3px 6px rgba(255,255,200,.3)',
+                display:'flex', alignItems:'center', justifyContent:'center',
+                flexDirection:'column',
+                animation:'konamiBadge .8s cubic-bezier(.34,1.56,.64,1) .2s both',
+              }}>
+                <div style={{fontFamily:'var(--fraktur)', fontSize:'2.2rem', color:'rgba(244,234,213,.95)', lineHeight:1, textShadow:'0 2px 6px rgba(0,0,0,.5)'}}>★</div>
+                <div style={{fontFamily:'var(--display)', fontSize:'.3rem', letterSpacing:'.2em', color:'rgba(244,234,213,.7)', textTransform:'uppercase', marginTop:'.1rem'}}>Grand Master</div>
+              </div>
+
+              <div style={{
+                fontFamily:'var(--fell)', fontSize:'.95rem', fontStyle:'italic',
+                color:'rgba(244,234,213,.5)', lineHeight:1.8, maxWidth:'420px',
+              }}>"In the annals of this manuscript, thy name shall be recorded among the wisest of seekers — for thou hast proven both cunning and knowledge beyond measure."</div>
+
+              <div style={{
+                display:'flex', gap:'.6rem', flexWrap:'wrap', justifyContent:'center',
+                marginTop:'.3rem',
+              }}>
+                {['🎓 Wisdom','⚡ Speed','🔮 Mystery','👑 Mastery'].map(badge => (
+                  <span key={badge} style={{
+                    fontFamily:'var(--display)', fontSize:'.38rem', letterSpacing:'.12em',
+                    color:'rgba(212,168,32,.8)', textTransform:'uppercase',
+                    border:'1px solid rgba(212,168,32,.3)', padding:'.25rem .6rem',
+                    background:'rgba(212,168,32,.06)',
+                  }}>{badge}</span>
+                ))}
+              </div>
+
+              <button onClick={() => { setQuizActive(false); setQuizResult(null) }} style={{
+                marginTop:'1rem', padding:'.6rem 2rem', border:'1px solid rgba(212,168,32,.5)',
+                background:'rgba(212,168,32,.1)', color:'rgba(212,168,32,.9)',
+                fontFamily:'var(--display)', fontSize:'.42rem', letterSpacing:'.2em',
+                textTransform:'uppercase', cursor:'pointer',
+                transition:'all .25s',
+              }}
+              onMouseEnter={e => { e.target.style.background='rgba(212,168,32,.2)'; e.target.style.transform='translateY(-2px)' }}
+              onMouseLeave={e => { e.target.style.background='rgba(212,168,32,.1)'; e.target.style.transform='translateY(0)' }}
+              >Close & Return to Manuscript</button>
+            </div>
+          ) : quizResult === 'wrong' ? (
+            /* ===== WRONG ANSWER ===== */
+            <div style={{
+              display:'flex', flexDirection:'column', alignItems:'center', gap:'1rem',
+              animation:'konamiText .5s cubic-bezier(.16,1,.3,1) both',
+              maxWidth:'440px', padding:'0 1.5rem', textAlign:'center',
+            }}>
+              <div style={{fontSize:'3rem', animation:'konamiBadge .6s cubic-bezier(.34,1.56,.64,1) both'}}>📜</div>
+              <div style={{
+                fontFamily:'var(--fraktur)', fontSize:'clamp(1.5rem,4vw,2.5rem)',
+                color:'rgba(196,67,26,.9)', lineHeight:1.1,
+                textShadow:'0 0 30px rgba(196,67,26,.5)',
+              }}>Alas, Not Quite…</div>
+              <div style={{
+                fontFamily:'var(--display)', fontSize:'.45rem', letterSpacing:'.2em',
+                color:'rgba(212,168,32,.5)', textTransform:'uppercase',
+              }}>The scroll remains sealed</div>
+              <div style={{
+                fontFamily:'var(--fell)', fontSize:'.9rem', fontStyle:'italic',
+                color:'rgba(244,234,213,.4)', lineHeight:1.8, maxWidth:'380px',
+              }}>"The ancient manuscript whispers: seek again, dear traveller, for the answer lies within reach — but this page shall not reveal it so easily."</div>
+
+              <div style={{display:'flex', gap:'.6rem', flexWrap:'wrap', justifyContent:'center', marginTop:'.3rem'}}>
+                <button onClick={() => {
+                  const q = EASTER_EGG_QUIZ[Math.floor(Math.random() * EASTER_EGG_QUIZ.length)]
+                  setQuizQuestion(q); setQuizSelected(null); setQuizResult(null)
+                }} style={{
+                  padding:'.5rem 1.5rem', border:'1px solid rgba(212,168,32,.4)',
+                  background:'rgba(212,168,32,.08)', color:'rgba(212,168,32,.8)',
+                  fontFamily:'var(--display)', fontSize:'.4rem', letterSpacing:'.15em',
+                  textTransform:'uppercase', cursor:'pointer', transition:'all .25s',
+                }}
+                onMouseEnter={e => { e.target.style.background='rgba(212,168,32,.18)' }}
+                onMouseLeave={e => { e.target.style.background='rgba(212,168,32,.08)' }}
+                >Try Another Question</button>
+                <button onClick={() => { setQuizActive(false); setQuizResult(null) }} style={{
+                  padding:'.5rem 1.5rem', border:'1px solid rgba(139,105,20,.3)',
+                  background:'transparent', color:'rgba(139,105,20,.6)',
+                  fontFamily:'var(--display)', fontSize:'.4rem', letterSpacing:'.15em',
+                  textTransform:'uppercase', cursor:'pointer', transition:'all .25s',
+                }}
+                onMouseEnter={e => { e.target.style.color='rgba(212,168,32,.8)' }}
+                onMouseLeave={e => { e.target.style.color='rgba(139,105,20,.6)' }}
+                >Close</button>
+              </div>
+            </div>
+          ) : (
+            /* ===== QUIZ QUESTION ===== */
+            <div style={{
+              display:'flex', flexDirection:'column', alignItems:'center', gap:'1.2rem',
+              animation:'konamiText .5s cubic-bezier(.16,1,.3,1) both',
+              maxWidth:'520px', width:'90%', padding:'0 1rem',
+            }}>
+              <div style={{
+                fontFamily:'var(--display)', fontSize:'.45rem', letterSpacing:'.3em',
+                color:'rgba(212,168,32,.5)', textTransform:'uppercase',
+              }}>✦ The Final Trial ✦</div>
+              <div style={{
+                fontFamily:'var(--fraktur)', fontSize:'clamp(1.2rem,3.5vw,2rem)',
+                color:'var(--gold2)', textAlign:'center', lineHeight:1.3,
+                textShadow:'0 0 20px rgba(212,168,32,.5)',
+              }}>Answer to claim thy reward</div>
+              <div style={{
+                fontFamily:'var(--fell)', fontSize:'1rem', fontStyle:'italic',
+                color:'rgba(244,234,213,.6)', textAlign:'center', lineHeight:1.7,
+                maxWidth:'460px', padding:'.8rem 1.2rem',
+                border:'1px solid rgba(212,168,32,.2)',
+                background:'rgba(212,168,32,.04)',
+              }}>{quizQuestion.q}</div>
+
+              <div style={{
+                display:'grid', gridTemplateColumns:'1fr 1fr', gap:'.5rem',
+                width:'100%', maxWidth:'460px',
+              }}>
+                {quizQuestion.choices.map((choice, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      if (quizSelected !== null) return
+                      setQuizSelected(idx)
+                      if (idx === quizQuestion.answer) {
+                        // CORRECT — spawn confetti
+                        const colors = ['#d4a820','#c4431a','#4a7a3a','#e8d5b0','#9b1c1c','#fff8e7','#b5890f','#f4ead5']
+                        const shapes = ['circle','square','star']
+                        const confettiArr = []
+                        for (let i = 0; i < 80; i++) {
+                          confettiArr.push({
+                            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 800),
+                            y: -20 - Math.random() * 200,
+                            size: Math.random() * 10 + 4,
+                            color: colors[Math.floor(Math.random() * colors.length)],
+                            shape: shapes[Math.floor(Math.random() * shapes.length)],
+                            rot: Math.random() * 360,
+                            dur: Math.random() * 2 + 2,
+                          })
+                        }
+                        setQuizConfetti(confettiArr)
+                        setTimeout(() => setQuizResult('correct'), 600)
+                      } else {
+                        setTimeout(() => setQuizResult('wrong'), 800)
+                      }
+                    }}
+                    style={{
+                      padding:'.65rem .8rem',
+                      border: quizSelected === idx
+                        ? (idx === quizQuestion.answer ? '2px solid #4a7a3a' : '2px solid #9b1c1c')
+                        : '1px solid rgba(212,168,32,.25)',
+                      background: quizSelected === idx
+                        ? (idx === quizQuestion.answer ? 'rgba(74,122,58,.15)' : 'rgba(155,28,28,.15)')
+                        : 'rgba(212,168,32,.04)',
+                      color: quizSelected === idx
+                        ? (idx === quizQuestion.answer ? 'rgba(120,200,100,.9)' : 'rgba(255,120,120,.9)')
+                        : 'rgba(244,234,213,.7)',
+                      fontFamily:'var(--fell)', fontSize:'.85rem',
+                      cursor: quizSelected !== null ? 'default' : 'pointer',
+                      transition:'all .25s',
+                      textAlign:'center',
+                      lineHeight: 1.4,
+                    }}
+                    onMouseEnter={e => { if (quizSelected === null) { e.target.style.background='rgba(212,168,32,.12)'; e.target.style.borderColor='rgba(212,168,32,.5)' }}}
+                    onMouseLeave={e => { if (quizSelected === null) { e.target.style.background='rgba(212,168,32,.04)'; e.target.style.borderColor='rgba(212,168,32,.25)' }}}
+                  >
+                    <span style={{fontFamily:'var(--display)',fontSize:'.38rem',color:'rgba(212,168,32,.4)',marginRight:'.3rem',letterSpacing:'.1em'}}>{String.fromCharCode(65+idx)}.</span>
+                    {choice}
+                  </button>
+                ))}
+              </div>
+
+              <div style={{
+                fontFamily:'var(--display)', fontSize:'.35rem', letterSpacing:'.15em',
+                color:'rgba(212,168,32,.3)', textTransform:'uppercase',
+                marginTop:'.3rem',
+              }}>Choose wisely, scholar</div>
+
+              <button onClick={() => { setQuizActive(false); setQuizResult(null) }} style={{
+                padding:'.4rem 1.2rem', border:'1px solid rgba(139,105,20,.2)',
+                background:'transparent', color:'rgba(139,105,20,.4)',
+                fontFamily:'var(--display)', fontSize:'.35rem', letterSpacing:'.15em',
+                textTransform:'uppercase', cursor:'pointer', transition:'all .2s', marginTop:'.3rem',
+              }}
+              onMouseEnter={e => { e.target.style.color='rgba(212,168,32,.7)' }}
+              onMouseLeave={e => { e.target.style.color='rgba(139,105,20,.4)' }}
+              >Skip Challenge</button>
+            </div>
+          )}
+        </div>
       )}
     </>
   )
