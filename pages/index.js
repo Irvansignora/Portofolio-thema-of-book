@@ -593,6 +593,52 @@ export default function BookPortfolio() {
     return () => el.removeEventListener('scroll', onScroll)
   }, [current])
 
+  // Custom inertia smooth scrolling for mouse wheel (Desktop)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth <= 700) return
+    const el = rightScrollRef.current
+    if (!el) return
+
+    let isTouchpad = false
+    let target = el.scrollTop
+    let moving = false
+
+    const update = () => {
+      const diff = target - el.scrollTop
+      if (Math.abs(diff) < 1) {
+        el.scrollTop = target
+        moving = false
+      } else {
+        el.scrollTop += diff * 0.12
+        moving = requestAnimationFrame(update)
+      }
+    }
+
+    const onWheel = (e) => {
+      // Basic touchpad detection: fraction deltas or small magnitude means it's a touchpad, which natively has momentum smooth scrolling
+      if (e.deltaY % 1 !== 0 || Math.abs(e.deltaY) < 30) isTouchpad = true
+      
+      // We only intercept chunky mouse scrolls. Horizontal wheel triggers naturally.
+      if (isTouchpad || el.scrollHeight <= el.clientHeight) return
+
+      e.preventDefault()
+      const multiplier = 1.6 // slightly stronger acceleration per click
+      target = el.scrollTop + (e.deltaY * multiplier)
+      target = Math.max(0, Math.min(target, el.scrollHeight - el.clientHeight))
+      
+      if (!moving) moving = requestAnimationFrame(update)
+    }
+
+    // Reset momentum target when chapter switches
+    target = 0; el.scrollTop = 0;
+
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => {
+      el.removeEventListener('wheel', onWheel)
+      if (moving) cancelAnimationFrame(moving)
+    }
+  }, [current])
+
   const playFlipSound = useCallback(() => {
     if (!soundOn) return
     try {
@@ -648,8 +694,8 @@ export default function BookPortfolio() {
         requestAnimationFrame(() => { if (rightScrollRef.current) rightScrollRef.current.style.scrollBehavior = '' })
       }
       if (id === 'home') trigCounters()
-    }, 620)
-    setTimeout(() => { setIsFlipping(false); flipping.current = false }, 1300)
+    }, 900)
+    setTimeout(() => { setIsFlipping(false); flipping.current = false }, 1850)
   }, [current, trigCounters, playFlipSound, spawnDustPuff])
 
   useEffect(() => {
@@ -857,7 +903,7 @@ export default function BookPortfolio() {
     setFormSending(false)
   }
 
-  const flipStyle = isFlipping ? { animation: `${flipDir==='forward'?'flipForward':'flipBackward'} 1.25s cubic-bezier(0.22,1,0.36,1) forwards` } : {}
+  const flipStyle = isFlipping ? { animation: `${flipDir==='forward'?'flipForward':'flipBackward'} 1.8s cubic-bezier(0.3, 0, 0.4, 1) forwards` } : {}
 
   return (
     <>
@@ -1035,7 +1081,7 @@ export default function BookPortfolio() {
               transparent 100%
             );
             pointer-events:none; z-index:3;
-            animation: pageShimmer 1.15s cubic-bezier(.4,0,.6,1) forwards;
+            animation: pageShimmer 1.7s cubic-bezier(.4,0,.6,1) forwards;
           }
 
           /* Grain texture */
@@ -1051,7 +1097,7 @@ export default function BookPortfolio() {
             background:linear-gradient(108deg,#cbb882 0%,#e0ceac 40%,#d8c49a 100%);
             backface-visibility:visible;
             pointer-events:none; z-index:4;
-            animation: backfaceReveal 1.15s forwards;
+            animation: backfaceReveal 1.7s forwards;
           }
           .flip-leaf-back::before {
             content:'';
