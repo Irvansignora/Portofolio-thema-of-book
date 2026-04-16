@@ -1654,11 +1654,11 @@ export default function BookPortfolio() {
 
                 {[
                   { icon: '💼', title: 'Sales & Business',    pct: 80, chips: ['Team Leadership','Sales Strategy','Business Development','Client Relations','Negotiation'] },
-                  { icon: '🗂️', title: 'Administration & Tax', pct: 82, chips: ['Tax Management','Administrative Reports','Receivables','Bookkeeping','Budget Planning'] },
+                  { icon: '🗂️', title: 'Administration & Tax', pct: 87, chips: ['Tax Management','Administrative Reports','Receivables','Bookkeeping','Budget Planning'] },
                   { icon: '📊', title: 'Data & Analytics',    pct: 85, chips: ['Data Analysis','Sales Analytics','Reporting','WordPress','Optimisation'] },
-                  { icon: '💻', title: 'Technical Tools',     pct: 75, chips: ['MS Excel','MS Word','PowerPoint','Outlook','MS Office Suite'] },
-                  { icon: '🎯', title: 'Management',          pct: 80, chips: ['Team Management','Strategic Planning','Time Management','Problem Solving','Decision Making'] },
-                  { icon: '🤝', title: 'Soft Skills',         pct: 78, chips: ['Communication','Teamwork','Fast Learner','Adaptable','Resilient'] },
+                  { icon: '💻', title: 'Technical Tools',     pct: 78, chips: ['MS Excel','MS Word','PowerPoint','Outlook','MS Office Suite'] },
+                  { icon: '🎯', title: 'Management',          pct: 85, chips: ['Team Management','Strategic Planning','Time Management','Problem Solving','Decision Making'] },
+                  { icon: '🤝', title: 'Soft Skills',         pct: 85, chips: ['Communication','Teamwork','Fast Learner','Adaptable','Resilient'] },
                 ].map((s, idx) => (
                   <div key={s.title} className="skill-entry stagger-entry" style={{animationDelay:`${idx * 0.08}s`}}>
                     <div className="skill-entry-title"><span>{s.icon}</span> {s.title}</div>
