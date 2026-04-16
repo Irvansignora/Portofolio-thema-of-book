@@ -131,7 +131,7 @@ const PROJECTS_DATA = [
     desc:'Full-featured digital commerce solutions built for all kinds of small businesses -- food & beverage, fashion, accessories, skincare, grocery, handmade products, and services. From a complete online store with cart & checkout, to a snack distributor website, and a fully offline POS system for daily cashier operations.',
     story:'Three separate projects with a shared goal: making small business commerce digital, smooth, and reliable. The online store serves any UMKM needing a customer-facing storefront; the distributor site showcases wholesale products; the offline POS keeps operations running without internet.',
     tech:['Next.js','Tailwind CSS','Vercel','Context API','HTML','CSS','JavaScript'],
-    links:[{href:'https://hulyaapparel.com',label:'→ Hulya Apparel (UMKM)'},{href:'https://distributor-snack.vercel.app/',label:'→ Website Distributor Snack'},{href:'https://irvansignora.github.io/Kasir-Offline/',label:'→ POS Offline Kasir'}],
+    links:[{href:'https://hulyaapparel.com',label:'→ Hulya Apparel (UMKM)'},{href:'https://distributor-snack.vercel.app/',label:'→ Website Distributor Snack'},{href:'https://demo-pos.iranza.com/',label:'→ POS Kasir'}],
     highlights:['Full cart & checkout flow (Hulya Apparel)','Distributor product catalogue & order info','Offline POS — works without internet','Clean, professional UI for UMKM'],
     status:'Live & Deployed', year:'2024',
   },
