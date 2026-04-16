@@ -62,14 +62,14 @@ const SOCIAL_PLACEHOLDER = {
     {type:'image',src:'https://res.cloudinary.com/dyhvx9wit/image/upload/v1772679069/Jambore_Anak_Yatim_f6ry9h.jpg'},
   ],
   5: [
-    {type:'image',src:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=300&h=220&fit=crop'},
-    {type:'image',src:'https://images.unsplash.com/photo-1560785496-3c9d27877182?w=300&h=220&fit=crop'},
-    {type:'image',src:'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=300&h=220&fit=crop'},
+    {type:'image',src:'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=400&h=300&fit=crop'},
+    {type:'image',src:'https://images.unsplash.com/photo-1511629091441-ee46146481b6?q=80&w=400&h=300&fit=crop'},
+    {type:'image',src:'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=400&h=300&fit=crop'},
   ],
   6: [
-    {type:'image',src:'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=300&h=220&fit=crop'},
-    {type:'image',src:'https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?w=300&h=220&fit=crop'},
-    {type:'image',src:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&h=220&fit=crop'},
+    {type:'image',src:'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=400&h=300&fit=crop'},
+    {type:'image',src:'https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?q=80&w=400&h=300&fit=crop'},
+    {type:'image',src:'https://images.unsplash.com/photo-1582408921715-18e7806365c1?q=80&w=400&h=300&fit=crop'},
   ],
 }
 
@@ -1676,7 +1676,6 @@ export default function BookPortfolio() {
                           )
                         })}
                       </div>
-                      <p className="photo-placeholder-note">* Foto sementara — ganti dengan foto asli di folder /public (social-{s.num.toLowerCase()}-img1.jpg, dst.)</p>
                     </div>
                   </div>
                 ))}
@@ -1865,18 +1864,19 @@ export default function BookPortfolio() {
       {current!=='home' && scrollPct<95 && (
         <div style={{
           position:'fixed', bottom:'2.2rem', right:'2.5rem', zIndex:50,
-          pointerEvents:'none', display:'flex', flexDirection:'column', alignItems:'center', gap:'.3rem',
-          opacity: scrollPct>80 ? 0 : 0.6, transition:'opacity .6s',
+          pointerEvents:'none', display:'flex', flexDirection:'column', alignItems:'center', gap:'.4rem',
+          opacity: scrollPct>80 ? 0 : 0.95, transition:'opacity .6s',
+          filter:'drop-shadow(0 0 8px rgba(212,168,32,.5)) drop-shadow(0 4px 12px rgba(0,0,0,.6))'
         }}>
           <span style={{
-            fontFamily:'var(--display)', fontSize:'.38rem', color:'var(--gold)',
-            textTransform:'uppercase',
+            fontFamily:'var(--display)', fontSize:'.5rem', color:'var(--gold2)',
+            textTransform:'uppercase', fontWeight:'bold',
             writingMode:'vertical-rl', letterSpacing:'.25em',
-            animation:'quillBob 2.2s ease-in-out infinite',
-          }}>scroll</span>
-          <svg width="12" height="24" viewBox="0 0 12 24" fill="none" style={{animation:'quillBob 2.2s ease-in-out infinite .3s'}}>
-            <line x1="6" y1="0" x2="6" y2="20" stroke="rgba(181,137,15,.6)" strokeWidth="1"/>
-            <polyline points="2,16 6,22 10,16" fill="none" stroke="rgba(181,137,15,.6)" strokeWidth="1.2"/>
+            animation:'quillBob 1.8s ease-in-out infinite',
+          }}>Scroll</span>
+          <svg width="16" height="30" viewBox="0 0 16 30" fill="none" style={{animation:'quillBob 1.8s ease-in-out infinite .2s'}}>
+            <line x1="8" y1="0" x2="8" y2="26" stroke="var(--gold2)" strokeWidth="1.5"/>
+            <polyline points="2,20 8,28 14,20" fill="none" stroke="var(--gold2)" strokeWidth="1.5"/>
           </svg>
         </div>
       )}
