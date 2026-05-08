@@ -1869,7 +1869,7 @@ export default function BookPortfolio() {
 
             {/* Quick actions — Get CV & LinkedIn inside mobile drawer */}
             <div style={{marginTop:'auto',borderTop:'1px solid rgba(181,137,15,.15)',paddingTop:'.8rem',display:'flex',flexDirection:'column',gap:'.4rem',padding:'1rem 1rem 0'}}>
-              <a href="/CV-Muhamad-Irpan-Yasin.pdf" download="CV-Muhamad-Irpan-Yasin.pdf"
+              <a href="/cv.pdf" download="CV-Muhamad-Irpan-Yasin.pdf"
                 style={{display:'flex',alignItems:'center',gap:'.5rem',padding:'.5rem .8rem',border:'1px solid rgba(181,137,15,.3)',color:'rgba(181,137,15,.8)',fontFamily:'var(--display)',fontSize:'.4rem',letterSpacing:'.12em',textTransform:'uppercase',textDecoration:'none',background:'rgba(181,137,15,.05)'}}>
                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" style={{width:'13px',height:'13px',flexShrink:0}}>
                   <path d="M4 1h6l3 3v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/><path d="M9 1v4h3M8 7v5m-2-2 2 2 2-2"/>
